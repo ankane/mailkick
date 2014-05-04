@@ -3,7 +3,7 @@ module Mailkick
 
     def mailkick_user(options = {})
       class_eval do
-        scope :subscribed, proc{ joins(sanitize_sql_array(["LEFT JOIN mailkick_opt_outs ON #{table_name}.email = mailkick_opt_outs.email OR (#{table_name}.id = mailkick_opt_outs.user_id AND mailkick_opt_outs.user_type = ?)", name])).where("active != ?", true) }
+        scope :subscribed, proc{ joins(sanitize_sql_array(["LEFT JOIN mailkick_opt_outs ON #{table_name}.email = mailkick_opt_outs.email OR (#{table_name}.id = mailkick_opt_outs.user_id AND mailkick_opt_outs.user_type = ?)", name])).where("active != ?", true).uniq }
 
         def opt_outs
           Mailkick::OptOut.where("email = ? OR (user_id = ? AND user_type = ?)", email, id, self.class.name)
