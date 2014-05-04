@@ -15,6 +15,7 @@ module Mailkick
         @mandrill = ::Mandrill::API.new(options[:api_key] || ENV["MANDRILL_APIKEY"])
       end
 
+      # TODO paginate
       def opt_outs
         @mandrill.rejects.list.map do |record|
           {

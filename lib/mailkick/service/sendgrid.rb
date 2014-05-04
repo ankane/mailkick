@@ -9,6 +9,7 @@ module Mailkick
         @api_key = options[:api_key] || ENV["SENDGRID_PASSWORD"]
       end
 
+      # TODO paginate
       def opt_outs
         unsubscribes + spam_reports + bounces
       end

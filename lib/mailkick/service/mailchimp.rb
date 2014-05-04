@@ -9,6 +9,7 @@ module Mailkick
         @list_id = options[:list_id] || ENV["MAILCHIMP_LIST_ID"]
       end
 
+      # TODO paginate
       def opt_outs
         unsubscribes + spam_reports
       end
