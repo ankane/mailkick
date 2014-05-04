@@ -3,6 +3,12 @@
 module Mailkick
   class Service
     class Mandrill < Mailkick::Service
+      REASONS_MAP = {
+        "hard-bounce" => "bounce",
+        "soft-bounce" => "bounce",
+        "spam" => "spam",
+        "unsub" => "unsubscribe"
+      }
 
       def initialize(options = {})
         require "mandrill"
@@ -10,10 +16,13 @@ module Mailkick
       end
 
       def opt_outs
-        # @mandrill.rejects.list.map do |record|
-        #   record
-        # end
-        []
+        @mandrill.rejects.list.map do |record|
+          {
+            email: record["email"],
+            time: ActiveSupport::TimeZone["UTC"].parse(record["created_at"]),
+            reason: REASONS_MAP[record["reason"]]
+          }
+        end
       end
 
       def self.discoverable?

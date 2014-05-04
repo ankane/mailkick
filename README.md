@@ -104,7 +104,7 @@ gem 'sendgrid_toolkit'
 
 Be sure `ENV["SENDGRID_USERNAME"]` and `ENV["SENDGRID_PASSWORD"]` are set.
 
-#### Mandrill [broken]
+#### Mandrill [master]
 
 ```ruby
 gem 'mandrill-api'
