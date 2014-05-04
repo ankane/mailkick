@@ -144,6 +144,7 @@ Coming soon
 More great gems for email
 
 - [Roadie](https://github.com/Mange/roadie) - inline CSS
+- [Letter Opener](https://github.com/ryanb/letter_opener) - preview email in development
 
 ## Reference
 
