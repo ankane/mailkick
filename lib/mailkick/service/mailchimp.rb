@@ -31,7 +31,7 @@ module Mailkick
         response["data"].map do |record|
           {
             email: record["email"],
-            time: ActiveSupport::TimeZone["UTC"].parse(record["timestamp_opt"]),
+            time: ActiveSupport::TimeZone["UTC"].parse(record["timestamp_opt"] || record["date"]),
             reason: reason
           }
         end
