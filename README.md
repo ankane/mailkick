@@ -112,9 +112,17 @@ gem 'mandrill-api'
 
 Be sure `ENV["MANDRILL_APIKEY"]` is set.
 
+#### Mailchimp [master]
+
+```ruby
+gem 'gibbon'
+```
+
+Be sure `ENV["MAILCHIMP_API_KEY"]` and `ENV["MAILCHIMP_LIST_ID"]` are set.
+
 #### Other
 
-Send a pull request.
+Will gladly accept pull requests.
 
 ### Advanced
 

@@ -4,6 +4,7 @@ require "mailkick/processor"
 require "mailkick/mailer"
 require "mailkick/model"
 require "mailkick/service"
+require "mailkick/service/mailchimp"
 require "mailkick/service/mandrill"
 require "mailkick/service/sendgrid"
 
