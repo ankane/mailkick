@@ -53,13 +53,13 @@ module Mailkick
     end
     helper_method :subscribed?
 
-    def subscribe_url
-      subscribe_subscription_path(params[:id])
+    def subscribe_url(options = {})
+      subscribe_subscription_path(params[:id], options)
     end
     helper_method :subscribe_url
 
-    def unsubscribe_url
-      unsubscribe_subscription_path(params[:id])
+    def unsubscribe_url(options = {})
+      unsubscribe_subscription_path(params[:id], options)
     end
     helper_method :unsubscribe_url
 
