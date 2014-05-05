@@ -161,14 +161,12 @@ For opt-in lists, you’ll need to manage the subscribers yourself.
 Check opt-ins against the opt-outs
 
 ```ruby
-# opt-ins minus opt-outs
 User.where(send_me_sales: true).not_opted_out(list: "sales")
 ```
 
 Check one user
 
 ```ruby
-# opted in and didn't opt out
 user.send_me_sales && !user.opted_out?(list: "sales")
 ```
 
