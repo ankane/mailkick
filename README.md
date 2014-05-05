@@ -129,7 +129,7 @@ Mailkick.services = [
 ]
 ```
 
-## Multiple Lists
+## Multiple Lists [beta]
 
 You may want to split your emails into multiple categories, like sale emails and order reminders.
 
