@@ -6,12 +6,12 @@ module Mailkick
     end
 
     def unsubscribe
-      Mailkick.opt_out(email: @email, user: @user, list: @list)
+      Mailkick.opt_out(@options)
       redirect_to subscription_path(params[:id])
     end
 
     def subscribe
-      Mailkick.opt_in(email: @email, user: @user, list: @list)
+      Mailkick.opt_in(@options)
       redirect_to subscription_path(params[:id])
     end
 
@@ -25,25 +25,28 @@ module Mailkick
           # on the unprobabilistic chance user_type is compromised, not much damage
           @user = user_type.constantize.find(user_id)
         end
-        @options = {}
-        @options[:list] = @list if @list
+        @options = {
+          email: @email,
+          user: @user,
+          list: @list
+        }
       rescue ActiveSupport::MessageVerifier::InvalidSignature
         render text: "Subscription not found", status: :bad_request
       end
     end
 
-    def opted_out?(options = {})
-      Mailkick.opted_out?(@options.merge(options))
+    def opted_out?
+      Mailkick.opted_out?(@options)
     end
     helper_method :opted_out?
 
-    def subscribe_url(options = {})
-      subscribe_subscription_path(params[:id], options)
+    def subscribe_url
+      subscribe_subscription_path(params[:id])
     end
     helper_method :subscribe_url
 
-    def unsubscribe_url(options = {})
-      unsubscribe_subscription_path(params[:id], options)
+    def unsubscribe_url
+      unsubscribe_subscription_path(params[:id])
     end
     helper_method :unsubscribe_url
 
