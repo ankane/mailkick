@@ -1,4 +1,4 @@
-## 0.0.5 [unreleased]
+## 0.0.5
 
 - Fixed bug with subscriptions page
 
