@@ -62,33 +62,39 @@ class User < ActiveRecord::Base
 end
 ```
 
-Get all users who have not unsubscribed
+Get all users who have opted out
 
 ```ruby
-User.subscribed
+User.opted_out
+```
+
+And those who have not (send to these people)
+
+```ruby
+User.not_opted_out
 ```
 
 Check one user
 
 ```ruby
-user.subscribed?
+user.opted_out?
 ```
 
 Unsubscribe
 
 ```ruby
-user.unsubscribe
+user.opt_out
 ```
 
-Subscribe
+Resubscribe
 
 ```ruby
-user.subscribe
+user.opt_in
 ```
 
 ## Bounces and Spam Reports
 
-Pull bounces, spam reports, and unsubscribes from your email service.
+Fetch bounces, spam reports, and unsubscribes from your email service.
 
 ```ruby
 Mailkick.fetch_opt_outs
@@ -126,7 +132,7 @@ Will gladly accept pull requests.
 
 ### Advanced
 
-For more control over the services, set them by hand.
+For more control over services, set them by hand.
 
 ```ruby
 Mailkick.services = [
@@ -137,7 +143,60 @@ Mailkick.services = [
 
 ## Multiple Lists
 
-Coming soon
+You may want to split your emails into multiple categories, like sale emails and order reminders.
+
+Set the list in the mailer.
+
+```ruby
+class UserMailer < ActionMailer::Base
+
+  def order_reminder(user)
+    header[:mailkick_list] = "order_reminders"
+    # ...
+  end
+
+end
+```
+
+Pass the `list` option to methods.
+
+```ruby
+# scopes
+User.not_opted_out(list: "order_reminders")
+
+# instance methods
+user.opted_out?(list: "order_reminders")
+user.opt_out(list: "order_reminders")
+user.opt_in(list: "order_reminders")
+```
+
+Omitting list (`nil` list) means all lists - including future lists (think “Unsubscribe All”).
+
+```ruby
+# opted out of all lists?
+user.opted_out?
+
+# opted out of the order reminder list *or* all lists?
+user.opted_out?(list: "order_reminders")
+```
+
+### Opt-In Lists
+
+For opt-in lists, you’ll need to manage the subscribers yourself.
+
+Mailkick stores opt-outs, which you can combine with opt-ins.
+
+```ruby
+# opt-ins minus opt-outs
+User.where(send_me_sales: true).not_opted_out(list: "sales")
+```
+
+Check one user
+
+```ruby
+# opted in and didn't opt out
+user.send_me_sales && !user.opted_out?(list: "sales")
+```
 
 ## Bonus
 

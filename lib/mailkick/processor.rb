@@ -9,9 +9,14 @@ module Mailkick
     def process
       email = message.to.first
       user = Mailkick.user_method.call(email) if Mailkick.user_method
+      list = message[:mailkick_list].try(:value)
+      if list
+        # remove header
+        message[:mailkick_list] = nil
+      end
 
       verifier = ActiveSupport::MessageVerifier.new(Mailkick.secret_token)
-      token = verifier.generate([email, user.try(:id), user.try(:class).try(:name)])
+      token = verifier.generate([email, user.try(:id), user.try(:class).try(:name), list])
 
       parts = message.parts.any? ? message.parts : [message]
       parts.each do |part|

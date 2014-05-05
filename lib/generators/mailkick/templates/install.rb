@@ -6,6 +6,7 @@ class <%= migration_class_name %> < ActiveRecord::Migration
       t.string :user_type
       t.boolean :active, null: false, default: true
       t.string :reason
+      t.string :list
       t.timestamps
     end
 

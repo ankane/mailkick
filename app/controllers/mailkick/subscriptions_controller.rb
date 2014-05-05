@@ -6,11 +6,12 @@ module Mailkick
     end
 
     def unsubscribe
-      if subscribed?
+      if !opted_out?
         Mailkick::OptOut.create! do |o|
           o.email = @email
           o.user = @user
           o.reason = "unsubscribe"
+          o.list = @list
         end
       end
 
@@ -22,8 +23,8 @@ module Mailkick
         opt_out.active = false
         opt_out.save!
       end
-      if @user and @user.respond_to?(:subscribe)
-        @user.subscribe
+      if @user and @user.respond_to?(:opt_in)
+        @user.opt_in(@options)
       end
 
       redirect_to subscription_path(params[:id])
@@ -34,24 +35,32 @@ module Mailkick
     def set_email
       verifier = ActiveSupport::MessageVerifier.new(Mailkick.secret_token)
       begin
-        @email, user_id, user_type = verifier.verify(params[:id])
+        @email, user_id, user_type, @list = verifier.verify(params[:id])
         if user_type
           # on the unprobabilistic chance user_type is compromised, not much damage
           @user = user_type.constantize.find(user_id)
         end
+        @options = {}
+        @options[:list] = @list if @list
       rescue ActiveSupport::MessageVerifier::InvalidSignature
         render text: "Subscription not found", status: :bad_request
       end
     end
 
-    def subscribed?
-      if @user and @user.respond_to?(:subscribed?)
-        @user.subscribed?
+    def opted_out?(options = {})
+      options = @options.merge(options)
+      if @user and @user.respond_to?(:opted_out?)
+        @user.opted_out?(options)
       else
-        Mailkick::OptOut.where(email: @email, active: true).empty?
+        relation = Mailkick::OptOut.where(email: @email, active: true)
+        if options[:list]
+          relation.where("list IS NULL OR list = ?", options[:list])
+        else
+          relation.where("list IS NULL")
+        end.any?
       end
     end
-    helper_method :subscribed?
+    helper_method :opted_out?
 
     def subscribe_url(options = {})
       subscribe_subscription_path(params[:id], options)
