@@ -1,4 +1,4 @@
-## 0.0.4 [unreleased]
+## 0.0.4
 
 - Added `email_key` option to `mailkick_user`
 
