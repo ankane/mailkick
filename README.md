@@ -162,6 +162,7 @@ Pass the `list` option to methods.
 
 ```ruby
 # scopes
+User.opted_out(list: "order_reminders")
 User.not_opted_out(list: "order_reminders")
 
 # instance methods
