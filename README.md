@@ -154,16 +154,6 @@ User.not_opted_out(list: "order_reminders")
 user.opted_out?(list: "order_reminders")
 ```
 
-Omitting list (`nil` list) means all lists - including future lists (think “Unsubscribe All”).
-
-```ruby
-# opted out of all lists?
-user.opted_out?
-
-# opted out of the order reminder list *or* all lists?
-user.opted_out?(list: "order_reminders")
-```
-
 ### Opt-In Lists
 
 For opt-in lists, you’ll need to manage the subscribers yourself.
