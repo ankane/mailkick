@@ -8,13 +8,12 @@ module Mailkick
 
         opt_out = Mailkick::OptOut.where(email: email).order("updated_at desc").first
         if !opt_out or (time > opt_out.updated_at and !opt_out.active)
-          Mailkick::OptOut.create! do |o|
-            o.email = email
-            o.user = Mailkick.user_method if Mailkick.user_method.call(email)
-            o.reason = api_data[:reason]
-            o.created_at = time
-            o.updated_at = time
-          end
+          Mailkick.opt_out(
+            email: email,
+            user: Mailkick.user_method ? Mailkick.user_method.call(email) : nil,
+            reason: api_data[:reason],
+            time: time
+          )
         end
       end
       true

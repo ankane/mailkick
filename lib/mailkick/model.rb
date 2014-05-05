@@ -18,37 +18,19 @@ module Mailkick
         }
 
         def opt_outs(options = {})
-          relation = Mailkick::OptOut.where("email = ? OR (user_id = ? AND user_type = ?)", email, id, self.class.name)
-          if options[:list]
-            relation.where("list IS NULL OR list = ?", options[:list])
-          else
-            relation.where(list: nil)
-          end
+          Mailkick.opt_outs({email: email, user: self}.merge(options))
         end
 
         def opted_out?(options = {})
-          opt_outs(options).where(active: true).any?
+          Mailkick.opted_out?({email: email, user: self}.merge(options))
         end
 
         def opt_out(options = {})
-          if !opted_out?(options)
-            OptOut.create! do |o|
-              o.email = email
-              o.user = self
-              o.reason = "unsubscribe"
-              o.list = options[:list]
-              o.save!
-            end
-          end
-          true
+          Mailkick.opt_out({email: email, user: self}.merge(options))
         end
 
         def opt_in(options = {})
-          opt_outs(options).where(active: true).each do |opt_out|
-            opt_out.active = false
-            opt_out.save!
-          end
-          true
+          Mailkick.opt_in({email: email, user: self}.merge(options))
         end
 
       end

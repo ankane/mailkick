@@ -54,7 +54,7 @@ which copies the view into `app/views/mailkick`.
 
 Before sending marketing emails, make sure the user has not opted out.
 
-Add the following the method to your user model.
+Add the following method to models with email addresses.
 
 ```ruby
 class User < ActiveRecord::Base
@@ -68,7 +68,7 @@ Get all users who have opted out
 User.opted_out
 ```
 
-And those who have not (send to these people)
+And those who have not - send to these people
 
 ```ruby
 User.not_opted_out
@@ -78,18 +78,6 @@ Check one user
 
 ```ruby
 user.opted_out?
-```
-
-Unsubscribe
-
-```ruby
-user.opt_out
-```
-
-Resubscribe
-
-```ruby
-user.opt_in
 ```
 
 ## Bounces and Spam Reports
@@ -161,11 +149,11 @@ end
 Pass the `list` option to methods.
 
 ```ruby
-# scopes
+# user scopes
 User.opted_out(list: "order_reminders")
 User.not_opted_out(list: "order_reminders")
 
-# instance methods
+# user instance methods
 user.opted_out?(list: "order_reminders")
 user.opt_out(list: "order_reminders")
 user.opt_in(list: "order_reminders")
@@ -212,6 +200,30 @@ Change how the user is determined
 
 ```ruby
 Mailkick.user_method = proc {|email| User.where(email: email).first }
+```
+
+Unsubscribe a user
+
+```ruby
+user.opt_out
+```
+
+Resubscribe
+
+```ruby
+user.opt_in
+```
+
+Unsubscribe an email
+
+```ruby
+Mailkick.opt_out(email: "test@test.com")
+```
+
+Resubscribe an email
+
+```ruby
+Mailkick.opt_in(email: "test@test.com")
 ```
 
 ## History

@@ -6,27 +6,12 @@ module Mailkick
     end
 
     def unsubscribe
-      if !opted_out?
-        Mailkick::OptOut.create! do |o|
-          o.email = @email
-          o.user = @user
-          o.reason = "unsubscribe"
-          o.list = @list
-        end
-      end
-
+      Mailkick.opt_out(email: @email, user: @user, list: @list)
       redirect_to subscription_path(params[:id])
     end
 
     def subscribe
-      Mailkick::OptOut.where(email: @email, active: true).each do |opt_out|
-        opt_out.active = false
-        opt_out.save!
-      end
-      if @user and @user.respond_to?(:opt_in)
-        @user.opt_in(@options)
-      end
-
+      Mailkick.opt_in(email: @email, user: @user, list: @list)
       redirect_to subscription_path(params[:id])
     end
 
@@ -48,17 +33,7 @@ module Mailkick
     end
 
     def opted_out?(options = {})
-      options = @options.merge(options)
-      if @user and @user.respond_to?(:opted_out?)
-        @user.opted_out?(options)
-      else
-        relation = Mailkick::OptOut.where(email: @email, active: true)
-        if options[:list]
-          relation.where("list IS NULL OR list = ?", options[:list])
-        else
-          relation.where("list IS NULL")
-        end.any?
-      end
+      Mailkick.opted_out?(@options.merge(options))
     end
     helper_method :opted_out?
 
