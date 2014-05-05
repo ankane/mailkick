@@ -158,7 +158,7 @@ user.opted_out?(list: "order_reminders")
 
 For opt-in lists, you’ll need to manage the subscribers yourself.
 
-Mailkick stores opt-outs, which you can combine with opt-ins.
+Check opt-ins against the opt-outs
 
 ```ruby
 # opt-ins minus opt-outs
