@@ -149,14 +149,9 @@ end
 Pass the `list` option to methods.
 
 ```ruby
-# user scopes
 User.opted_out(list: "order_reminders")
 User.not_opted_out(list: "order_reminders")
-
-# user instance methods
 user.opted_out?(list: "order_reminders")
-user.opt_out(list: "order_reminders")
-user.opt_in(list: "order_reminders")
 ```
 
 Omitting list (`nil` list) means all lists - including future lists (think “Unsubscribe All”).
@@ -202,7 +197,7 @@ Change how the user is determined
 Mailkick.user_method = proc {|email| User.where(email: email).first }
 ```
 
-Unsubscribe a user
+Unsubscribe
 
 ```ruby
 user.opt_out
@@ -212,18 +207,6 @@ Resubscribe
 
 ```ruby
 user.opt_in
-```
-
-Unsubscribe an email
-
-```ruby
-Mailkick.opt_out(email: "test@test.com")
-```
-
-Resubscribe an email
-
-```ruby
-Mailkick.opt_in(email: "test@test.com")
 ```
 
 ## History
