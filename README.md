@@ -177,6 +177,11 @@ More great gems for email
 - [Roadie](https://github.com/Mange/roadie) - inline CSS
 - [Letter Opener](https://github.com/ryanb/letter_opener) - preview email in development
 
+## TODO
+
+- Make it easy to customize controller
+- Subscribe to events
+
 ## Reference
 
 Change how the user is determined

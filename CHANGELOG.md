@@ -1,3 +1,7 @@
+## 0.0.5 [unreleased]
+
+- Fixed bug with subscriptions page
+
 ## 0.0.4
 
 - Added `email_key` option to `mailkick_user`
