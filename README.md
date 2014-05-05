@@ -185,6 +185,12 @@ Change how the user is determined
 Mailkick.user_method = proc {|email| User.where(email: email).first }
 ```
 
+Use a different email field [master]
+
+```ruby
+mailkick_user email_key: :email_address
+```
+
 Unsubscribe
 
 ```ruby

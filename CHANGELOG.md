@@ -1,3 +1,7 @@
+## 0.0.4 [unreleased]
+
+- Added `email_key` option to `mailkick_user`
+
 ## 0.0.3
 
 - Added support for multiple lists
