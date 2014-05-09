@@ -1,3 +1,7 @@
+## 0.0.6
+
+- Rails 3 fix
+
 ## 0.0.5
 
 - Fixed bug with subscriptions page
