@@ -1,4 +1,4 @@
-## 0.1.0 [unreleased]
+## 0.1.0
 
 - Fixed secret token for Rails 4.1
 
