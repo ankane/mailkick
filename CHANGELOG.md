@@ -1,3 +1,7 @@
+## 0.1.0 [unreleased]
+
+- Fixed secret token for Rails 4.1
+
 ## 0.0.6
 
 - Rails 3 fix
