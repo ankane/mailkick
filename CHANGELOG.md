@@ -1,3 +1,7 @@
+## 0.1.1
+
+- Fixed tokens with `+` in them
+
 ## 0.1.0
 
 - Fixed secret token for Rails 4.1
