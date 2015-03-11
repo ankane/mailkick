@@ -3,7 +3,6 @@
 module Mailkick
   class Service
     class Mailchimp < Mailkick::Service
-
       def initialize(options = {})
         @gibbon = ::Gibbon::API.new(options[:api_key] || ENV["MAILCHIMP_API_KEY"])
         @list_id = options[:list_id] || ENV["MAILCHIMP_LIST_ID"]
@@ -37,7 +36,6 @@ module Mailkick
           }
         end
       end
-
     end
   end
 end

@@ -24,7 +24,6 @@ module Mailkick
       def copy_migration
         migration_template "install.rb", "db/migrate/install_mailkick.rb"
       end
-
     end
   end
 end

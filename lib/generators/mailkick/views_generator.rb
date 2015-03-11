@@ -8,7 +8,6 @@ module Mailkick
       def copy_initializer_file
         directory "mailkick", "app/views/mailkick"
       end
-
     end
   end
 end

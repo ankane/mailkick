@@ -1,15 +1,15 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'mailkick/version'
+require "mailkick/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "mailkick"
   spec.version       = Mailkick::VERSION
   spec.authors       = ["Andrew Kane"]
   spec.email         = ["andrew@chartkick.com"]
-  spec.summary       = %q{Email subscriptions made easy}
-  spec.description   = %q{Email subscriptions made easy}
+  spec.summary       = "Email subscriptions made easy"
+  spec.description   = "Email subscriptions made easy"
   spec.homepage      = "https://github.com/ankane/mailkick"
   spec.license       = "MIT"
 

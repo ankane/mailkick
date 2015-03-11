@@ -12,12 +12,10 @@ require "set"
 module Mailkick
   mattr_accessor :services, :user_method, :secret_token
   self.services = []
-  self.user_method = proc{|email| User.where(email: email).first rescue nil }
+  self.user_method = proc { |email| User.where(email: email).first rescue nil }
 
   def self.fetch_opt_outs
-    services.each do |service|
-      service.fetch_opt_outs
-    end
+    services.each(&:fetch_opt_outs)
   end
 
   def self.discover_services
@@ -33,7 +31,7 @@ module Mailkick
   end
 
   def self.opt_out(options)
-    if !opted_out?(options)
+    unless opted_out?(options)
       time = options[:time] || Time.now
       Mailkick::OptOut.create! do |o|
         o.email = options[:email]
@@ -90,7 +88,6 @@ module Mailkick
   def self.opted_out_users(options = {})
     Set.new(opt_outs(options).where("user_id IS NOT NULL").map(&:user))
   end
-
 end
 
 ActionMailer::Base.send :include, Mailkick::Mailer

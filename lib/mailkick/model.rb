@@ -1,6 +1,5 @@
 module Mailkick
   module Model
-
     def mailkick_user(options = {})
       email_key = options[:email_key] || :email
       class_eval do
@@ -12,7 +11,7 @@ module Mailkick
           else
             query = "mailkick_opt_outs.list IS NULL"
           end
-          where("#{options[:not] ? "NOT " : ""}EXISTS(SELECT * FROM mailkick_opt_outs WHERE (#{table_name}.#{email_key} = mailkick_opt_outs.email OR (#{table_name}.#{primary_key} = mailkick_opt_outs.user_id AND mailkick_opt_outs.user_type = ?)) AND mailkick_opt_outs.active = ? AND #{query})", *binds)
+          where("#{options[:not] ? 'NOT ' : ''}EXISTS(SELECT * FROM mailkick_opt_outs WHERE (#{table_name}.#{email_key} = mailkick_opt_outs.email OR (#{table_name}.#{primary_key} = mailkick_opt_outs.user_id AND mailkick_opt_outs.user_type = ?)) AND mailkick_opt_outs.active = ? AND #{query})", *binds)
         }
         scope :not_opted_out, proc {|options = {}|
           opted_out(options.merge(not: true))
@@ -29,9 +28,7 @@ module Mailkick
         def opt_in(options = {})
           Mailkick.opt_in({email: email, user: self}.merge(options))
         end
-
       end
     end
-
   end
 end

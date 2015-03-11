@@ -3,7 +3,6 @@
 module Mailkick
   class Service
     class Sendgrid < Mailkick::Service
-
       def initialize(options = {})
         @api_user = options[:api_user] || ENV["SENDGRID_USERNAME"]
         @api_key = options[:api_key] || ENV["SENDGRID_PASSWORD"]
@@ -41,7 +40,6 @@ module Mailkick
           }
         end
       end
-
     end
   end
 end

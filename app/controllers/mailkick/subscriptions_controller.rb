@@ -53,8 +53,7 @@ module Mailkick
     private
 
     def url_token
-      @url_token ||= CGI::escape(params[:id])
+      @url_token ||= CGI.escape(params[:id])
     end
-
   end
 end

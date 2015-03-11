@@ -1,6 +1,5 @@
 module Mailkick
   module Mailer
-
     def self.included(base)
       base.class_eval do
         alias_method_chain :mail, :mailkick
@@ -14,6 +13,5 @@ module Mailkick
 
       message
     end
-
   end
 end

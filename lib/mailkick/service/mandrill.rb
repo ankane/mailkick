@@ -29,7 +29,6 @@ module Mailkick
       def self.discoverable?
         !!(defined?(::Mandrill::API) && ENV["MANDRILL_APIKEY"])
       end
-
     end
   end
 end
