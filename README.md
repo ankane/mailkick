@@ -114,6 +114,14 @@ gem 'gibbon'
 
 Be sure `ENV["MAILCHIMP_API_KEY"]` and `ENV["MAILCHIMP_LIST_ID"]` are set.
 
+#### Mailgun
+
+```ruby
+gem 'mailgun-ruby'
+```
+
+Be sure `ENV["MAILGUN_API_KEY"]` is set.
+
 #### Other
 
 Will gladly accept pull requests.
