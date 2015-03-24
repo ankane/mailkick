@@ -7,6 +7,7 @@ require "mailkick/service"
 require "mailkick/service/mailchimp"
 require "mailkick/service/mandrill"
 require "mailkick/service/sendgrid"
+require "mailkick/service/mailgun"
 require "set"
 
 module Mailkick
