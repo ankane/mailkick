@@ -1,3 +1,7 @@
+## 0.1.2 [unreleased]
+
+- Added support for Mailgun
+
 ## 0.1.1
 
 - Fixed tokens with `+` in them
