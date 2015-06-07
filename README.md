@@ -147,7 +147,7 @@ Set the list in the mailer.
 class UserMailer < ActionMailer::Base
 
   def order_reminder(user)
-    header[:mailkick_list] = "order_reminders"
+    headers[:mailkick_list] = "order_reminders"
     # ...
   end
 
