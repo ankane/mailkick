@@ -7,12 +7,12 @@ module Mailkick
 
     def unsubscribe
       Mailkick.opt_out(@options)
-      redirect_to subscription_path(url_token)
+      redirect_to subscription_path(params[:id])
     end
 
     def subscribe
       Mailkick.opt_in(@options)
-      redirect_to subscription_path(url_token)
+      redirect_to subscription_path(params[:id])
     end
 
     protected
@@ -41,19 +41,13 @@ module Mailkick
     helper_method :opted_out?
 
     def subscribe_url
-      subscribe_subscription_path(url_token)
+      subscribe_subscription_path(params[:id])
     end
     helper_method :subscribe_url
 
     def unsubscribe_url
-      unsubscribe_subscription_path(url_token)
+      unsubscribe_subscription_path(params[:id])
     end
     helper_method :unsubscribe_url
-
-    private
-
-    def url_token
-      @url_token ||= CGI.escape(params[:id])
-    end
   end
 end
