@@ -1,3 +1,7 @@
+## 0.1.3
+
+- Fixed issue with double escaping tokens
+
 ## 0.1.2
 
 - Added support for Mailgun
