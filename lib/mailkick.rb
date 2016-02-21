@@ -21,9 +21,7 @@ module Mailkick
 
   def self.discover_services
     Service.subclasses.each do |service|
-      if service.discoverable?
-        services << service.new
-      end
+      services << service.new if service.discoverable?
     end
   end
 
@@ -67,9 +65,7 @@ module Mailkick
       parts << "user_id = ? and user_type = ?"
       binds.concat [user.id, user.class.name]
     end
-    if parts.any?
-      relation = relation.where(parts.join(" OR "), *binds)
-    end
+    relation = relation.where(parts.join(" OR "), *binds) if parts.any?
 
     relation =
       if options[:list]

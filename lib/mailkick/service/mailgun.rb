@@ -3,8 +3,8 @@
 module Mailkick
   class Service
     class Mailgun < Mailkick::Service
-      def initialize(options = {})
-        require 'mailgun'
+      def initalize(options = {})
+        require "mailgun"
         mailgun_client = ::Mailgun::Client.new(options[:api_key] || ENV["MAILGUN_API_KEY"])
         domain = options[:domain] || ActionMailer::Base.default_url_options[:host]
         @mailgun_events = ::Mailgun::Events.new(mailgun_client, domain)
@@ -15,15 +15,15 @@ module Mailkick
       end
 
       def unsubscribes
-        fetch(@mailgun_events.get({event: 'unsubscribed'}), 'unsubscribe')
+        fetch(@mailgun_events.get(event: "unsubscribed"), "unsubscribe")
       end
 
       def spam_reports
-        fetch(@mailgun_events.get({event: 'complained'}), 'spam')
+        fetch(@mailgun_events.get(event: "complained"), "spam")
       end
 
       def bounces
-        fetch(@mailgun_events.get({event: 'failed'}), 'bounce')
+        fetch(@mailgun_events.get(event: "failed"), "bounce")
       end
 
       def self.discoverable?
@@ -33,10 +33,10 @@ module Mailkick
       protected
 
       def fetch(response, reason)
-        response.to_h['items'].map do |record|
+        response.to_h["items"].map do |record|
           {
-            email: record['recipient'],
-            time: ActiveSupport::TimeZone['UTC'].at(record['timestamp']),
+            email: record["recipient"],
+            time: ActiveSupport::TimeZone["UTC"].at(record["timestamp"]),
             reason: reason
           }
         end
