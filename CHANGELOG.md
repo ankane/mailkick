@@ -1,3 +1,7 @@
+## 0.1.4
+
+- Use `Module#prepend` instead of `alias_method_chain`
+
 ## 0.1.3
 
 - Fixed issue with double escaping tokens
