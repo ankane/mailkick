@@ -91,5 +91,5 @@ module Mailkick
   end
 end
 
-ActionMailer::Base.send :include, Mailkick::Mailer
+ActionMailer::Base.send(:prepend, Mailkick::Mailer)
 ActiveRecord::Base.send(:extend, Mailkick::Model) if defined?(ActiveRecord)
