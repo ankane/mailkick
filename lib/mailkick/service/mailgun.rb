@@ -3,7 +3,7 @@
 module Mailkick
   class Service
     class Mailgun < Mailkick::Service
-      def initalize(options = {})
+      def initialize(options = {})
         require "mailgun"
         mailgun_client = ::Mailgun::Client.new(options[:api_key] || ENV["MAILGUN_API_KEY"])
         domain = options[:domain] || ActionMailer::Base.default_url_options[:host]
