@@ -10,9 +10,12 @@ module Mailkick
         "unsub" => "unsubscribe"
       }
 
+      # TODO remove ENV["MANDRILL_APIKEY"]
       def initialize(options = {})
         require "mandrill"
-        @mandrill = ::Mandrill::API.new(options[:api_key] || ENV["MANDRILL_API_KEY"])
+        @mandrill = ::Mandrill::API.new(
+          options[:api_key] || ENV["MANDRILL_API_KEY"] || ENV["MANDRILL_APIKEY"]
+        )
       end
 
       # TODO paginate
@@ -26,8 +29,10 @@ module Mailkick
         end
       end
 
+      # TODO remove ENV["MANDRILL_APIKEY"]
       def self.discoverable?
-        !!(defined?(::Mandrill::API) && ENV["MANDRILL_API_KEY"])
+        !!(defined?(::Mandrill::API) &&
+          ENV["MANDRILL_API_KEY"] || ENV["MANDRILL_APIKEY"]
       end
     end
   end
