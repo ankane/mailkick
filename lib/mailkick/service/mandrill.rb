@@ -14,7 +14,7 @@ module Mailkick
       def initialize(options = {})
         require "mandrill"
         @mandrill = ::Mandrill::API.new(
-          options[:api_key] || ENV["MANDRILL_API_KEY"] || ENV["MANDRILL_APIKEY"]
+          options[:api_key] || ENV["MANDRILL_APIKEY"] || ENV["MANDRILL_API_KEY"]
         )
       end
 
@@ -32,7 +32,7 @@ module Mailkick
       # TODO remove ENV["MANDRILL_APIKEY"]
       def self.discoverable?
         !!(defined?(::Mandrill::API) &&
-          ENV["MANDRILL_API_KEY"] || ENV["MANDRILL_APIKEY"]
+          (ENV["MANDRILL_APIKEY"] || ENV["MANDRILL_API_KEY"])
       end
     end
   end
