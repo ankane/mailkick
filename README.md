@@ -104,7 +104,7 @@ Be sure `ENV["SENDGRID_USERNAME"]` and `ENV["SENDGRID_PASSWORD"]` are set.
 gem 'mandrill-api'
 ```
 
-Be sure `ENV["MANDRILL_API_KEY"]` is set.
+Be sure `ENV["MANDRILL_APIKEY"]` is set.
 
 #### Mailchimp
 
