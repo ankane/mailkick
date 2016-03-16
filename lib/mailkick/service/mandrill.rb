@@ -31,8 +31,7 @@ module Mailkick
 
       # TODO remove ENV["MANDRILL_APIKEY"]
       def self.discoverable?
-        !!(defined?(::Mandrill::API) &&
-          (ENV["MANDRILL_APIKEY"] || ENV["MANDRILL_API_KEY"])
+        !!(defined?(::Mandrill::API) && (ENV["MANDRILL_APIKEY"] || ENV["MANDRILL_API_KEY"]))
       end
     end
   end
