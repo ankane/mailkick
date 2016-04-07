@@ -9,6 +9,7 @@ require "mailkick/service/mandrill"
 require "mailkick/service/sendgrid"
 require "mailkick/service/mailgun"
 require "set"
+require "safely/core"
 
 module Mailkick
   mattr_accessor :services, :user_method, :secret_token

@@ -1,3 +1,7 @@
+## 0.1.5 [unreleased]
+
+- Use `safely`
+
 ## 0.1.4
 
 - Use `Module#prepend` instead of `alias_method_chain`
