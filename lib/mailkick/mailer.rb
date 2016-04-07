@@ -3,7 +3,7 @@ module Mailkick
     def mail(headers = {}, &block)
       message = super
 
-      Safely.safely { Mailkick::Processor.new(message).process }
+      safely { Mailkick::Processor.new(message).process }
 
       message
     end
