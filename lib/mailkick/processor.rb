@@ -16,12 +16,18 @@ module Mailkick
       end
 
       verifier = ActiveSupport::MessageVerifier.new(Mailkick.secret_token)
-      token = verifier.generate([email, user.try(:id), user.try(:class).try(:name), list])
+      @token = verifier.generate([email, user.try(:id), user.try(:class).try(:name), list])
 
       parts = message.parts.any? ? message.parts : [message]
-      parts.each do |part|
-        part.body.raw_source.gsub!(/%7B%7BMAILKICK_TOKEN%7D%7D/, CGI.escape(token))
-      end
+
+      message.html_part = replace_token(message.html_part.decoded) if message.html_part
+      message.text_part = replace_token(message.text_part.decoded) if message.text_part
+    end
+
+    private
+
+    def replace_token(text)
+      text.gsub(/%7B%7BMAILKICK_TOKEN%7D%7D/, CGI.escape(@token))
     end
   end
 end
