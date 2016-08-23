@@ -22,7 +22,7 @@ module Mailkick
 
   def self.discover_services
     Service.subclasses.each do |service|
-      services << service.new if service.discoverable?
+      services << service.new if service.discoverable? && !services.map(&:class).include?(service)
     end
   end
 
