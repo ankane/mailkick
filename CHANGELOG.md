@@ -1,6 +1,7 @@
 ## 0.1.5 [unreleased]
 
 - Use `safely`
+- Only discover services if not manually set
 
 ## 0.1.4
 
