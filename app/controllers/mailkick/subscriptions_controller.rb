@@ -1,6 +1,6 @@
 module Mailkick
   class SubscriptionsController < ActionController::Base
-    before_filter :set_email
+    before_action :set_email
 
     def show
     end
