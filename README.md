@@ -17,6 +17,18 @@ Add this line to your application’s Gemfile:
 gem 'mailkick'
 ```
 
+Add these lines to your routes.rb file:
+```
+mount Mailkick::Engine => "/mailkick"
+
+  Mailkick::Engine.routes.draw do
+    resources :subscriptions, only: [:show] do
+      get :unsubscribe, on: :member
+      get :subscribe, on: :member
+    end
+  end
+```
+
 And run the generator. This creates a model to store opt-outs.
 
 ```sh
