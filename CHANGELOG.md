@@ -2,6 +2,7 @@
 
 - Use `safely`
 - Only discover services if not manually set
+- Added `mount` option
 
 ## 0.1.4
 

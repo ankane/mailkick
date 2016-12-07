@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  mount Mailkick::Engine => "/mailkick"
+  mount Mailkick::Engine => "/mailkick" if Mailkick.mount
 end
 
 Mailkick::Engine.routes.draw do

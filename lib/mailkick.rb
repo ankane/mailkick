@@ -12,9 +12,10 @@ require "set"
 require "safely_block"
 
 module Mailkick
-  mattr_accessor :services, :user_method, :secret_token
+  mattr_accessor :services, :user_method, :secret_token, :mount
   self.services = []
   self.user_method = proc { |email| User.where(email: email).first rescue nil }
+  self.mount = true
 
   def self.fetch_opt_outs
     services.each(&:fetch_opt_outs)
