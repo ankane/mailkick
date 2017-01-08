@@ -1,3 +1,7 @@
+## 0.1.6 [unreleased]
+
+- Fixed error with frozen strings
+
 ## 0.1.5
 
 - Use `safely`
