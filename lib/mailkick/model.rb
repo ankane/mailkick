@@ -1,7 +1,7 @@
 module Mailkick
   module Model
-    def mailkick_user(options = {})
-      email_key = options[:email_key] || :email
+    def mailkick_user(opts = {})
+      email_key = opts[:email_key] || :email
       class_eval do
         scope :opted_out, proc {|options = {}|
           binds = [self.class.name, true]

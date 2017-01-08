@@ -1,5 +1,7 @@
-require "mailkick/version"
-require "mailkick/engine"
+require "set"
+require "safely/core"
+require "active_support"
+require "mailkick/engine" if defined?(Rails)
 require "mailkick/processor"
 require "mailkick/mailer"
 require "mailkick/model"
@@ -8,8 +10,7 @@ require "mailkick/service/mailchimp"
 require "mailkick/service/mandrill"
 require "mailkick/service/sendgrid"
 require "mailkick/service/mailgun"
-require "set"
-require "safely/core"
+require "mailkick/version"
 
 module Mailkick
   mattr_accessor :services, :user_method, :secret_token, :mount
@@ -89,5 +90,10 @@ module Mailkick
   end
 end
 
-ActionMailer::Base.send(:prepend, Mailkick::Mailer)
-ActiveRecord::Base.send(:extend, Mailkick::Model) if defined?(ActiveRecord)
+ActiveSupport.on_load(:action_mailer) do
+  prepend Mailkick::Mailer
+end
+
+ActiveSupport.on_load(:active_record) do
+  extend Mailkick::Model
+end
