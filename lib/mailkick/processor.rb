@@ -20,7 +20,9 @@ module Mailkick
 
       parts = message.parts.any? ? message.parts : [message]
       parts.each do |part|
-        part.body.raw_source.gsub!(/%7B%7BMAILKICK_TOKEN%7D%7D/, CGI.escape(token))
+        if part.content_type.match(/text\/(html|plain)/)
+          part.body = part.body.decoded.gsub(/%7B%7BMAILKICK_TOKEN%7D%7D/, CGI.escape(token))
+        end
       end
     end
   end
