@@ -195,7 +195,7 @@ More great gems for email
 Change how the user is determined
 
 ```ruby
-Mailkick.user_method = proc {|email| User.where(email: email).first }
+Mailkick.user_method = (email) -> { User.find_by(email: email) }
 ```
 
 Use a different email field
