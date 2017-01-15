@@ -1,7 +1,7 @@
 module Mailkick
   module Model
     def mailkick_user(opts = {})
-      email_key = opts[:email_key] || :email
+      email_key = opts[:email_key] || :to_address
       class_eval do
         scope :opted_out, proc {|options = {}|
           binds = [self.class.name, true]
@@ -18,15 +18,15 @@ module Mailkick
         }
 
         def opted_out?(options = {})
-          Mailkick.opted_out?({email: email, user: self}.merge(options))
+          Mailkick.opted_out?({to_address: email, user: self}.merge(options))
         end
 
         def opt_out(options = {})
-          Mailkick.opt_out({email: email, user: self}.merge(options))
+          Mailkick.opt_out({to_address: email, user: self}.merge(options))
         end
 
         def opt_in(options = {})
-          Mailkick.opt_in({email: email, user: self}.merge(options))
+          Mailkick.opt_in({to_address: email, user: self}.merge(options))
         end
       end
     end
