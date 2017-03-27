@@ -1,4 +1,4 @@
-class <%= migration_class_name %> < ActiveRecord::Migration
+class <%= migration_class_name %> < ActiveRecord::Migration<% if ActiveRecord::VERSION::MAJOR >= 5 %>[<%=ActiveRecord::Migration.current_version%>]<% end %>
   def change
     create_table :mailkick_opt_outs do |t|
       t.string :email
@@ -7,7 +7,8 @@ class <%= migration_class_name %> < ActiveRecord::Migration
       t.boolean :active, null: false, default: true
       t.string :reason
       t.string :list
-      t.timestamps
+
+      <% if ActiveRecord::VERSION::MAJOR >= 5 || (ActiveRecord::VERSION::MAJOR >= 4 && ActiveRecord::VERSION::MINOR >= 2)%>t.timestamps null: false<% else %>t.timestamps<% end %>
     end
 
     add_index :mailkick_opt_outs, :email
