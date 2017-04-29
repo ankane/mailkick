@@ -15,8 +15,8 @@ class UserMailer < ActionMailer::Base
 
   def welcome
     mail to: "test@example.org", subject: "Hello" do |format|
-      format.html { render text: "<p>%7B%7BMAILKICK_TOKEN%7D%7D</p>" }
-      format.text { render text: "Boom: %7B%7BMAILKICK_TOKEN%7D%7D" }
+      format.html { render plain: "<p>%7B%7BMAILKICK_TOKEN%7D%7D</p>" }
+      format.text { render plain: "Boom: %7B%7BMAILKICK_TOKEN%7D%7D" }
     end
   end
 end

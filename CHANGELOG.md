@@ -1,3 +1,7 @@
+## 0.1.7 [unreleased]
+
+- Added support for Rails 5.1
+
 ## 0.1.6
 
 - Fixed error with frozen strings
