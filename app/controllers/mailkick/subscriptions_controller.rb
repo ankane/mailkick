@@ -22,14 +22,14 @@ module Mailkick
     def set_email
       verifier = ActiveSupport::MessageVerifier.new(Mailkick.secret_token)
       begin
-        @email, user_id, user_type, @list = verifier.verify(params[:id])
+        @to_address, user_id, user_type, @list = verifier.verify(params[:id])
         if user_type
           # on the unprobabilistic chance user_type is compromised, not much damage
           @user = user_type.constantize.find(user_id)
         end
         @options = {
-          email: @email,
-          user: @user,
+          email: @to_address,
+          user: @warmups,
           list: @list
         }
       rescue ActiveSupport::MessageVerifier::InvalidSignature

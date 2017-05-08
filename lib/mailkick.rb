@@ -15,7 +15,7 @@ require "mailkick/version"
 module Mailkick
   mattr_accessor :services, :user_method, :secret_token, :mount
   self.services = []
-  self.user_method = proc { |email| User.where(email: email).first rescue nil }
+  self.user_method = proc { |email| User.where(to_address: email).first rescue nil }
   self.mount = true
 
   def self.fetch_opt_outs
@@ -36,7 +36,7 @@ module Mailkick
     unless opted_out?(options)
       time = options[:time] || Time.now
       Mailkick::OptOut.create! do |o|
-        o.email = options[:email]
+        o.email = options[:to_address]
         o.user = options[:user]
         o.reason = options[:reason] || "unsubscribe"
         o.list = options[:list]
@@ -60,7 +60,7 @@ module Mailkick
 
     parts = []
     binds = []
-    if (email = options[:email])
+    if (email = options[:to_address])
       parts << "email = ?"
       binds << email
     end
@@ -81,7 +81,7 @@ module Mailkick
   end
 
   def self.opted_out_emails(options = {})
-    Set.new(opt_outs(options).where("email IS NOT NULL").uniq.pluck(:email))
+    Set.new(opt_outs(options).where("email IS NOT NULL").uniq.pluck(:to_address))
   end
 
   # does not take into account emails
