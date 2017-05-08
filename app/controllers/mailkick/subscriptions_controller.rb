@@ -22,7 +22,7 @@ module Mailkick
     def set_email
       verifier = ActiveSupport::MessageVerifier.new(Mailkick.secret_token)
       begin
-        @email, user_id, user_type, @list = verifier.verify(params[:id])
+        @email, user_id, user_type, @list = verifier.verify(CGI.unescape(params[:id]))
         if user_type
           # on the unprobabilistic chance user_type is compromised, not much damage
           @user = user_type.constantize.find(user_id)
