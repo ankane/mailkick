@@ -4,14 +4,22 @@ module Mailkick
       email_key = opts[:email_key] || :email
       class_eval do
         scope :opted_out, proc {|options = {}|
-          binds = [self.class.name, true]
-          if options[:list]
-            query = "(mailkick_opt_outs.list IS NULL OR mailkick_opt_outs.list = ?)"
-            binds << options[:list]
-          else
-            query = "mailkick_opt_outs.list IS NULL"
-          end
-          where("#{options[:not] ? 'NOT ' : ''}EXISTS(SELECT * FROM mailkick_opt_outs WHERE (#{table_name}.#{email_key} = mailkick_opt_outs.email OR (#{table_name}.#{primary_key} = mailkick_opt_outs.user_id AND mailkick_opt_outs.user_type = ?)) AND mailkick_opt_outs.active = ? AND #{query})", *binds)
+          opt_outs = Mailkick::OptOut.arel_table
+
+          list = opt_outs[:list].eq(nil)
+          list = list.or(opt_outs[:list].eq(options[:list])) if options[:list]
+
+          user_id = arel_table[primary_key].eq(opt_outs[:user_id])
+          user_type = opt_outs[:user_type].eq(name)
+          user_condition = arel_table.grouping(user_id.and(user_type))
+          email = arel_table[email_key].eq(opt_outs[:email])
+          active = opt_outs[:active].eq(true)
+
+          exists_condition = email.or(user_condition).and(active).and(list)
+          exists_statement = opt_outs.project(Arel.star).where(exists_condition).exists
+          exists_statement = exists_statement.not if options[:not]
+
+          where(exists_statement)
         }
         scope :not_opted_out, proc {|options = {}|
           opted_out(options.merge(not: true))
