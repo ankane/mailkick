@@ -3,8 +3,9 @@ Rails.application.routes.draw do
 end
 
 Mailkick::Engine.routes.draw do
-  resources :subscriptions, only: [:show] do
-    get :unsubscribe, on: :member
-    get :subscribe, on: :member
+  scope format: false do
+    get '/subscriptions/*id/unsubscribe', to: "subscriptions#unsubscribe", as: :unsubscribe_subscription
+    get '/subscriptions/*id/subscribe', to: "subscriptions#subscribe", as: :subscribe_subscription
+    get '/subscriptions/*id', to: "subscriptions#show", as: :subscription
   end
 end
