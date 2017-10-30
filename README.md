@@ -109,7 +109,7 @@ Be sure `ENV["MANDRILL_APIKEY"]` is set.
 #### Mailchimp
 
 ```ruby
-gem 'gibbon'
+gem 'gibbon', '>= 2'
 ```
 
 Be sure `ENV["MAILCHIMP_API_KEY"]` and `ENV["MAILCHIMP_LIST_ID"]` are set.
