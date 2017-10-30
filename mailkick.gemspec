@@ -24,4 +24,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "minitest"
+  spec.add_development_dependency "sendgrid_toolkit"
+  spec.add_development_dependency "mandrill-api"
+  spec.add_development_dependency "gibbon", ">= 2"
+  spec.add_development_dependency "mailgun-ruby"
 end
