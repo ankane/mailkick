@@ -1,3 +1,8 @@
+## 0.2.1
+
+- Fixed errors with Rails 5+
+- Fixed errors with the latest version of Gibbon
+
 ## 0.2.0
 
 - Added support for Rails 5.1
