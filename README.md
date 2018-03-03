@@ -21,7 +21,7 @@ And run the generator. This creates a model to store opt-outs.
 
 ```sh
 rails generate mailkick:install
-rake db:migrate
+rails db:migrate
 ```
 
 ## How It Works
@@ -145,12 +145,10 @@ Set the list in the mailer.
 
 ```ruby
 class UserMailer < ActionMailer::Base
-
   def order_reminder(user)
     headers[:mailkick_list] = "order_reminders"
     # ...
   end
-
 end
 ```
 
@@ -195,7 +193,7 @@ More great gems for email
 Change how the user is determined
 
 ```ruby
-Mailkick.user_method = -> (email) { User.find_by(email: email) }
+Mailkick.user_method = ->(email) { User.find_by(email: email) }
 ```
 
 Use a different email field
