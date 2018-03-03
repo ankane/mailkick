@@ -9,7 +9,6 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Andrew Kane"]
   spec.email         = ["andrew@chartkick.com"]
   spec.summary       = "Email subscriptions made easy"
-  spec.description   = "Email subscriptions made easy"
   spec.homepage      = "https://github.com/ankane/mailkick"
   spec.license       = "MIT"
 
@@ -22,10 +21,10 @@ Gem::Specification.new do |spec|
   spec.add_dependency "safely_block", ">= 0.1.1"
 
   spec.add_development_dependency "bundler"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "minitest"
-  spec.add_development_dependency "sendgrid_toolkit"
-  spec.add_development_dependency "mandrill-api"
   spec.add_development_dependency "gibbon", ">= 2"
   spec.add_development_dependency "mailgun-ruby"
+  spec.add_development_dependency "mandrill-api"
+  spec.add_development_dependency "minitest"
+  spec.add_development_dependency "rake"
+  spec.add_development_dependency "sendgrid_toolkit"
 end
