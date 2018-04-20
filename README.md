@@ -1,6 +1,6 @@
 # Mailkick
 
-:bullettrain_side: Email subscriptions made easy
+Email subscriptions made easy
 
 - Add one-click unsubscribe links to your emails
 - Fetch bounces and spam reports from your email service
