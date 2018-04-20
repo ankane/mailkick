@@ -29,13 +29,7 @@ module Mailkick
     end
 
     def mailkick_token
-      @mailkick_token ||= begin
-        email = message.to.first
-        user = Mailkick.user_method.call(email) if Mailkick.user_method
-
-        token = Mailkick.message_verifier.generate([email, user.try(:id), user.try(:class).try(:name), @list])
-        CGI.escape(token)
-      end
+      @mailkick_token ||= CGI.escape(Mailkick.generate_token(message.to.first, list: @list))
     end
   end
 end

@@ -93,6 +93,11 @@ module Mailkick
   def self.message_verifier
     @message_verifier ||= ActiveSupport::MessageVerifier.new(Mailkick.secret_token)
   end
+
+  def self.generate_token(email, list: nil)
+    user = Mailkick.user_method.call(email) if Mailkick.user_method
+    message_verifier.generate([email, user.try(:id), user.try(:class).try(:name), list])
+  end
 end
 
 ActiveSupport.on_load(:action_mailer) do
