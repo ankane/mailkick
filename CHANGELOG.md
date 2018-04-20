@@ -1,3 +1,7 @@
+## 0.2.2 [unreleased]
+
+- Fixed `Subscription not found` for Rails 5.2
+
 ## 0.2.1
 
 - Fixed errors with Rails 5+

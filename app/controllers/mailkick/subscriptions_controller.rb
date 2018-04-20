@@ -33,7 +33,11 @@ module Mailkick
           list: @list
         }
       rescue ActiveSupport::MessageVerifier::InvalidSignature
-        render text: "Subscription not found", status: :bad_request
+        if Rails::VERSION::MAJOR >= 5
+          render plain: "Subscription not found", status: :bad_request
+        else
+          render text: "Subscription not found", status: :bad_request
+        end
       end
     end
 
