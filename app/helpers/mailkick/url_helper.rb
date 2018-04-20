@@ -1,7 +1,7 @@
 module Mailkick
   module UrlHelper
-    def mailkick_unsubscribe_url(list: nil)
-      email = controller.message.to.first
+    def mailkick_unsubscribe_url(email: nil, list: nil)
+      email ||= controller.message.to.first
       Mailkick::Engine.routes.url_helpers.url_for(
         (ActionMailer::Base.default_url_options || {}).merge(
           controller: "mailkick/subscriptions",
