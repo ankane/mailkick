@@ -1,9 +1,9 @@
 require "bundler/setup"
+require "combustion"
 Bundler.require(:default)
 require "minitest/autorun"
 require "minitest/pride"
 require "logger"
-require "combustion"
 
 Minitest::Test = Minitest::Unit::TestCase unless defined?(Minitest::Test)
 
