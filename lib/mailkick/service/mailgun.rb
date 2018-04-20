@@ -6,7 +6,7 @@ module Mailkick
       def initialize(options = {})
         require "mailgun"
         mailgun_client = ::Mailgun::Client.new(options[:api_key] || ENV["MAILGUN_API_KEY"])
-        domain = options[:domain] || ActionMailer::Base.default_url_options[:host]
+        domain = options[:domain] || ActionMailer::Base.smtp_settings[:domain]
         @mailgun_events = ::Mailgun::Events.new(mailgun_client, domain)
       end
 
