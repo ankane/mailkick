@@ -66,7 +66,7 @@ module Mailkick
       binds << email
     end
     if (user = options[:user])
-      parts << "user_id = ? and user_type = ?"
+      parts << "(user_id = ? and user_type = ?)"
       binds.concat [user.id, user.class.name]
     end
     relation = relation.where(parts.join(" OR "), *binds) if parts.any?

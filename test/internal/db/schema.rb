@@ -9,4 +9,8 @@ ActiveRecord::Schema.define do
   end
 
   add_index :mailkick_opt_outs, :email
+
+  create_table :users do |t|
+    t.string :email
+  end
 end

@@ -10,7 +10,20 @@ class MailkickTest < Minitest::Test
   end
 
   def test_opt_out
-    Mailkick.opt_out(email: "test@example.org")
-    assert_equal 1, Mailkick::OptOut.count
+    email = "test2@example.org"
+    user = User.create!(email: email)
+
+    Mailkick.opt_out(email: email, user: user)
+
+    opt_outs = Mailkick::OptOut.all.to_a
+    assert_equal 1, opt_outs.size
+
+    opt_out = opt_outs.first
+    assert_equal email, opt_out.email
+    assert_equal user, opt_out.user
+
+    assert user.opted_out?
+    assert_equal 1, User.opted_out.count
+    assert_equal 0, User.not_opted_out.count
   end
 end
