@@ -57,7 +57,7 @@ Before sending marketing emails, make sure the user has not opted out.
 Add the following method to models with email addresses.
 
 ```ruby
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   mailkick_user
 end
 ```
@@ -144,7 +144,7 @@ You may want to split your emails into multiple categories, like sale emails and
 Set the list in the mailer.
 
 ```ruby
-class UserMailer < ActionMailer::Base
+class UserMailer < ApplicationMailer
   def order_reminder(user)
     headers[:mailkick_list] = "order_reminders"
     # ...
