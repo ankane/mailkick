@@ -1,7 +1,8 @@
-## 0.2.2 [unreleased]
+## 0.3.0 [unreleased]
 
-- Fixed `Subscription not found` for Rails 5.2
+- Improved performance
 - Use `references` in migration
+- Fixed `Subscription not found` for Rails 5.2
 
 ## 0.2.1
 
