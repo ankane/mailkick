@@ -92,6 +92,8 @@ module Mailkick
   end
 
   def self.generate_token(email, list: nil)
+    raise ArgumentError, "Missing email" unless email
+
     user = Mailkick.user_method.call(email) if Mailkick.user_method
     message_verifier.generate([email, user.try(:id), user.try(:class).try(:name), list])
   end
