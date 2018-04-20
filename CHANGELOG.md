@@ -1,9 +1,10 @@
-## 0.3.0 [unreleased]
+## 0.3.0
 
 - Improved performance
 - Fixed `Subscription not found` for Rails 5.2
 - Use `references` in migration
 - Use `smtp_settings[:domain]` for Mailgun
+- Dropped support for ActionMailer < 4.2
 
 ## 0.2.1
 

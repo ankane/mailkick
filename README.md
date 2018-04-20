@@ -138,19 +138,12 @@ Mailkick.services = [
 ]
 ```
 
-## Multiple Lists [beta]
+## Multiple Lists
 
-You may want to split your emails into multiple categories, like sale emails and order reminders.
-
-Set the list in the mailer.
+You may want to split your emails into multiple categories, like sale emails and order reminders. Set the list in the url:
 
 ```ruby
-class UserMailer < ApplicationMailer
-  def order_reminder(user)
-    headers[:mailkick_list] = "order_reminders"
-    # ...
-  end
-end
+mailkick_unsubscribe_url(list: "order_reminders")
 ```
 
 Pass the `list` option to methods.
@@ -183,11 +176,6 @@ More great gems for email
 
 - [Roadie](https://github.com/Mange/roadie) - inline CSS
 - [Letter Opener](https://github.com/ryanb/letter_opener) - preview email in development
-
-## TODO
-
-- Make it easy to customize controller
-- Subscribe to events
 
 ## Reference
 
