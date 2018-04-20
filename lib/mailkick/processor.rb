@@ -26,14 +26,9 @@ module Mailkick
         email = message.to.first
         user = Mailkick.user_method.call(email) if Mailkick.user_method
 
-        token = self.class.verifier.generate([email, user.try(:id), user.try(:class).try(:name), @list])
+        token = Mailkick.message_verifier.generate([email, user.try(:id), user.try(:class).try(:name), @list])
         CGI.escape(token)
       end
-    end
-
-    # performance
-    def self.verifier
-      @verifier ||= ActiveSupport::MessageVerifier.new(Mailkick.secret_token)
     end
   end
 end

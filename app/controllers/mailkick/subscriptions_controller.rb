@@ -20,24 +20,21 @@ module Mailkick
     protected
 
     def set_email
-      verifier = ActiveSupport::MessageVerifier.new(Mailkick.secret_token)
-      begin
-        @email, user_id, user_type, @list = verifier.verify(params[:id])
-        if user_type
-          # on the unprobabilistic chance user_type is compromised, not much damage
-          @user = user_type.constantize.find(user_id)
-        end
-        @options = {
-          email: @email,
-          user: @user,
-          list: @list
-        }
-      rescue ActiveSupport::MessageVerifier::InvalidSignature
-        if Rails::VERSION::MAJOR >= 5
-          render plain: "Subscription not found", status: :bad_request
-        else
-          render text: "Subscription not found", status: :bad_request
-        end
+      @email, user_id, user_type, @list = Mailkick.message_verifier.verify(params[:id])
+      if user_type
+        # on the unprobabilistic chance user_type is compromised, not much damage
+        @user = user_type.constantize.find(user_id)
+      end
+      @options = {
+        email: @email,
+        user: @user,
+        list: @list
+      }
+    rescue ActiveSupport::MessageVerifier::InvalidSignature
+      if Rails::VERSION::MAJOR >= 5
+        render plain: "Subscription not found", status: :bad_request
+      else
+        render text: "Subscription not found", status: :bad_request
       end
     end
 

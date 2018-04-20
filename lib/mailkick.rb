@@ -89,6 +89,10 @@ module Mailkick
   def self.opted_out_users(options = {})
     Set.new(opt_outs(options).where("user_id IS NOT NULL").map(&:user))
   end
+
+  def self.message_verifier
+    @message_verifier ||= ActiveSupport::MessageVerifier.new(Mailkick.secret_token)
+  end
 end
 
 ActiveSupport.on_load(:action_mailer) do

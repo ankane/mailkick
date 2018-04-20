@@ -15,6 +15,7 @@ module Mailkick
           )
         end
       end
+
       true
     end
   end
