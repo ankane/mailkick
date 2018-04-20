@@ -4,7 +4,7 @@ require "active_support"
 
 require "mailkick/engine" if defined?(Rails)
 require "mailkick/processor"
-require "mailkick/mailer"
+require "mailkick/interceptor"
 require "mailkick/model"
 require "mailkick/service"
 require "mailkick/service/mailchimp"
@@ -92,7 +92,7 @@ module Mailkick
 end
 
 ActiveSupport.on_load(:action_mailer) do
-  prepend Mailkick::Mailer
+  register_interceptor(Mailkick::Interceptor)
 end
 
 ActiveSupport.on_load(:active_record) do
