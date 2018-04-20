@@ -1,15 +1,14 @@
 module Mailkick
   module UrlHelper
-    def mailkick_unsubscribe_url
-      @mailkick_unsubscribe_url ||= begin
-        Mailkick::Engine.routes.url_helpers.url_for(
-          (ActionMailer::Base.default_url_options || {}).merge(
-            controller: "mailkick/subscriptions",
-            action: "unsubscribe",
-            id: "{{MAILKICK_TOKEN}}"
-          )
+    def mailkick_unsubscribe_url(list: nil)
+      email = controller.message.to.first
+      Mailkick::Engine.routes.url_helpers.url_for(
+        (ActionMailer::Base.default_url_options || {}).merge(
+          controller: "mailkick/subscriptions",
+          action: "unsubscribe",
+          id: Mailkick.generate_token(email, list: list)
         )
-      end
+      )
     end
   end
 end

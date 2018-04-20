@@ -1,10 +1,7 @@
 require "set"
-require "safely/core"
 require "active_support"
 
 require "mailkick/engine" if defined?(Rails)
-require "mailkick/processor"
-require "mailkick/interceptor"
 require "mailkick/model"
 require "mailkick/service"
 require "mailkick/service/mailchimp"
@@ -98,10 +95,6 @@ module Mailkick
     user = Mailkick.user_method.call(email) if Mailkick.user_method
     message_verifier.generate([email, user.try(:id), user.try(:class).try(:name), list])
   end
-end
-
-ActiveSupport.on_load(:action_mailer) do
-  register_interceptor(Mailkick::Interceptor)
 end
 
 ActiveSupport.on_load(:active_record) do
