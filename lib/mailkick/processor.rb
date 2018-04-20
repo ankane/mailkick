@@ -13,9 +13,16 @@ module Mailkick
         message[:mailkick_list] = nil
       end
 
-      parts = message.parts.any? ? message.parts : [message]
+      replace_parts(message.parts)
+    end
+
+    private
+
+    def replace_parts(parts)
       parts.each do |part|
-        if part.content_type.match(/text\/(html|plain)/)
+        if part.parts.any?
+          replace_parts(part.parts)
+        elsif part.content_type.match(/text\/(html|plain)/)
           part.body = part.body.decoded.gsub(/%7B%7BMAILKICK_TOKEN%7D%7D/) { mailkick_token }
         end
       end
