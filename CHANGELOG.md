@@ -1,8 +1,9 @@
 ## 0.3.0 [unreleased]
 
 - Improved performance
-- Use `references` in migration
 - Fixed `Subscription not found` for Rails 5.2
+- Use `references` in migration
+- Use `smtp_settings[:domain]` for Mailgun
 
 ## 0.2.1
 
