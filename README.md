@@ -4,10 +4,11 @@
 
 - Add one-click unsubscribe links to your emails
 - Fetch bounces and spam reports from your email service
-
-Gracefully handles email address changes
+- Gracefully handles email address changes
 
 :postbox: Check out [Ahoy Email](https://github.com/ankane/ahoy_email) for analytics
+
+[![Build Status](https://travis-ci.org/ankane/mailkick.svg?branch=master)](https://travis-ci.org/ankane/mailkick)
 
 ## Installation
 
