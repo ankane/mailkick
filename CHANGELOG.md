@@ -1,6 +1,7 @@
 ## 0.3.1 [unreleased]
 
 - Gracefully handle missing email
+- Added `user` option to `mailkick_unsubscribe_url`
 
 ## 0.3.0
 

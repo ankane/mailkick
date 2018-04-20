@@ -91,10 +91,10 @@ module Mailkick
     @message_verifier ||= ActiveSupport::MessageVerifier.new(Mailkick.secret_token)
   end
 
-  def self.generate_token(email, list: nil)
+  def self.generate_token(email, user: nil, list: nil)
     raise ArgumentError, "Missing email" unless email
 
-    user = Mailkick.user_method.call(email) if Mailkick.user_method
+    user ||= Mailkick.user_method.call(email) if Mailkick.user_method
     message_verifier.generate([email, user.try(:id), user.try(:class).try(:name), list])
   end
 end
