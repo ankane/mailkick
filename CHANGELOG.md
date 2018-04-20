@@ -1,3 +1,7 @@
+## 0.3.1 [unreleased]
+
+- Gracefully handle missing email
+
 ## 0.3.0
 
 - Improved performance
