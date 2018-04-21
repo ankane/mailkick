@@ -1,4 +1,4 @@
-## 0.3.1 [unreleased]
+## 0.3.1
 
 - Fixed `Secret should not be nil` error in Rails 5.2
 - Gracefully handle missing email
