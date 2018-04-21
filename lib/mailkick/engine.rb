@@ -7,7 +7,7 @@ module Mailkick
 
       Mailkick.secret_token ||= begin
         creds =
-          if app.respond_to?(:credentials)
+          if app.respond_to?(:credentials) && app.credentials.secret_key_base
             app.credentials
           elsif app.respond_to?(:secrets)
             app.secrets

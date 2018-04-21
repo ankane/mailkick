@@ -1,5 +1,6 @@
 ## 0.3.1 [unreleased]
 
+- Fixed `Secret should not be nil` error in Rails 5.2
 - Gracefully handle missing email
 - Added `user` option to `mailkick_unsubscribe_url`
 

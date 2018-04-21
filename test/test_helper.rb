@@ -16,5 +16,3 @@ end
 
 ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT) if ENV["VERBOSE"]
 ActionMailer::Base.delivery_method = :test
-
-Mailkick.secret_token = "test123"
