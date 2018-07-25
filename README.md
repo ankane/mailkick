@@ -207,24 +207,17 @@ user.opt_in
 
 By default, the underlying table where mailkick stores the data is named `mailkick_opt_outs`.
 
-However, this table is not exposed as a Rails model.
+This is also exposed as a Rails model with class name `Mailkick::OptOut`
 
-In case you want to access this table the Rails-y way, to bulk update a list name or for debugging purposes,
-simply add this in your Rails console or migration file.
-
-So like,
-
-```ruby
-class MailkickOptOut < ActiveRecord::Base; end;
-```
-and you can start accessing the data in this table via the class `MailkickOptOut`
+If you want to access the Mailkick data, to bulk update a list name or for debugging purposes,
+you can do so using this class.
 
 For eg,
 
 To bulk update a list's name:
 
 ```ruby
-MailkickOptOut.where(list: 'old_list_name').update_all(list: 'new_list_name')
+Mailkick::OptOut.where(list: 'old_list_name').update_all(list: 'new_list_name')
 ```
 
 ## History
