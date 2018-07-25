@@ -203,6 +203,30 @@ Resubscribe
 user.opt_in
 ```
 
+## Accessing the Mailkick Table
+
+By default, the underlying table where mailkick stores the data is named `mailkick_opt_outs`.
+
+However, this table is not exposed as a Rails model.
+
+In case you want to access this table the Rails-y way, to bulk update a list name or for debugging purposes,
+simply add this in your Rails console or migration file.
+
+So like,
+
+```ruby
+class MailkickOptOut < ActiveRecord::Base; end;
+```
+and you can start accessing the data in this table via the class `MailkickOptOut`
+
+For eg,
+
+To bulk update a list's name:
+
+```ruby
+MailkickOptOut.where(list: 'old_list_name').update_all(list: 'new_list_name')
+```
+
 ## History
 
 View the [changelog](https://github.com/ankane/mailkick/blob/master/CHANGELOG.md)
