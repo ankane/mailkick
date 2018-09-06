@@ -3,7 +3,7 @@ module Mailkick
     def mailkick_user(opts = {})
       email_key = opts[:email_key] || :email
       class_eval do
-        scope :opted_out, lambda do |options = {}|
+        scope :opted_out, lambda { |options = {}|
           binds = [self.class.name, true]
           if options[:list]
             query = "(mailkick_opt_outs.list IS NULL OR mailkick_opt_outs.list = ?)"
@@ -12,11 +12,11 @@ module Mailkick
             query = "mailkick_opt_outs.list IS NULL"
           end
           where("#{options[:not] ? 'NOT ' : ''}EXISTS(SELECT * FROM mailkick_opt_outs WHERE (#{table_name}.#{email_key} = mailkick_opt_outs.email OR (#{table_name}.#{primary_key} = mailkick_opt_outs.user_id AND mailkick_opt_outs.user_type = ?)) AND mailkick_opt_outs.active = ? AND #{query})", *binds)
-        end
+        }
 
-        scope :not_opted_out, lambda do |options = {}|
+        scope :not_opted_out, lambda { |options = {}|
           opted_out(options.merge(not: true))
-        end
+        }
 
         def opted_out?(options = {})
           Mailkick.opted_out?({email: email, user: self}.merge(options))
