@@ -203,7 +203,11 @@ Resubscribe
 user.opt_in
 ```
 
-You can access Mailkick data using the model `Mailkick::OptOut`
+Access the opt-out model directly
+
+```ruby
+Mailkick::OptOut.all
+```
 
 ## History
 
