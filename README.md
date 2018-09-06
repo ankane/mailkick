@@ -203,6 +203,8 @@ Resubscribe
 user.opt_in
 ```
 
+You can access Mailkick data using the model `Mailkick::OptOut`
+
 ## History
 
 View the [changelog](https://github.com/ankane/mailkick/blob/master/CHANGELOG.md)
