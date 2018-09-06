@@ -1,3 +1,7 @@
+if ActiveRecord::ConnectionAdapters::SQLite3Adapter.respond_to?(:represent_boolean_as_integer=)
+  ActiveRecord::ConnectionAdapters::SQLite3Adapter.represent_boolean_as_integer = true
+end
+
 ActiveRecord::Schema.define do
   create_table :mailkick_opt_outs do |t|
     t.string :email
