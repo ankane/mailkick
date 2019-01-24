@@ -32,17 +32,21 @@ class MailkickTest < Minitest::Test
   end
 
   def test_instance_methods
-    user = User.create!(email: "test2@example.org")
+    email = "test2@example.org"
+    user = User.create!(email: email)
     user.opt_out
     assert user.opted_out?
+    assert Mailkick::OptOut.exists?(email: email)
     user.opt_in
     assert !user.opted_out?
   end
 
   def test_email_key
-    user = Admin.create!(email_address: "test2@example.org")
+    email = "test2@example.org"
+    user = Admin.create!(email_address: email)
     user.opt_out
     assert user.opted_out?
+    assert Mailkick::OptOut.exists?(email: email)
     user.opt_in
     assert !user.opted_out?
   end
