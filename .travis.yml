@@ -1,16 +1,13 @@
+dist: xenial
 language: ruby
-rvm:
-  - 2.4.2
-sudo: false
+rvm: 2.5.3
+gemfile:
+  - Gemfile
+  - test/gemfiles/activerecord51.gemfile
+  - test/gemfiles/activerecord50.gemfile
+  - test/gemfiles/activerecord42.gemfile
 script: bundle exec rake test
-before_script:
-  - gem install bundler
 notifications:
   email:
     on_success: never
     on_failure: change
-gemfile:
-  - Gemfile
-  - test/gemfiles/actionmailer51.gemfile
-  - test/gemfiles/actionmailer50.gemfile
-  - test/gemfiles/actionmailer42.gemfile
