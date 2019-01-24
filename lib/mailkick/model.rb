@@ -19,15 +19,15 @@ module Mailkick
         }
 
         define_method :opted_out? do |options = {}|
-          Mailkick.opted_out?({email: email_key, user: self}.merge(options))
+          Mailkick.opted_out?({email: send(email_key), user: self}.merge(options))
         end
 
         define_method :opt_out do |options = {}|
-          Mailkick.opt_out({email: email_key, user: self}.merge(options))
+          Mailkick.opt_out({email: send(email_key), user: self}.merge(options))
         end
 
         define_method :opt_in do |options = {}|
-          Mailkick.opt_in({email: email_key, user: self}.merge(options))
+          Mailkick.opt_in({email: send(email_key), user: self}.merge(options))
         end
       end
     end
