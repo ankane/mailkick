@@ -10,7 +10,7 @@ ActiveRecord::Schema.define do
     t.boolean :active, null: false, default: true
     t.string :reason
     t.string :list
-    t.timestamps
+    t.timestamps null: false
   end
 
   add_index :mailkick_opt_outs, :email
