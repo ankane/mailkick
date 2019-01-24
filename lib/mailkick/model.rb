@@ -18,16 +18,16 @@ module Mailkick
           opted_out(options.merge(not: true))
         }
 
-        def opted_out?(options = {})
-          Mailkick.opted_out?({email: email, user: self}.merge(options))
+        define_method :opted_out? do |options = {}|
+          Mailkick.opted_out?({email: email_key, user: self}.merge(options))
         end
 
-        def opt_out(options = {})
-          Mailkick.opt_out({email: email, user: self}.merge(options))
+        define_method :opt_out do |options = {}|
+          Mailkick.opt_out({email: email_key, user: self}.merge(options))
         end
 
-        def opt_in(options = {})
-          Mailkick.opt_in({email: email, user: self}.merge(options))
+        define_method :opt_in do |options = {}|
+          Mailkick.opt_in({email: email_key, user: self}.merge(options))
         end
       end
     end

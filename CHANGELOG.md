@@ -1,3 +1,7 @@
+## 0.3.2 [unreleased]
+
+- Fixed error with model methods and `email_key` option
+
 ## 0.3.1
 
 - Fixed `Secret should not be nil` error in Rails 5.2
