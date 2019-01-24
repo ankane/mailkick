@@ -2,6 +2,7 @@ require_relative "test_helper"
 
 class MailkickTest < Minitest::Test
   def setup
+    User.delete_all
     Mailkick::OptOut.delete_all
   end
 
