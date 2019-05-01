@@ -9,11 +9,13 @@ module Mailkick
 
     def unsubscribe
       Mailkick.opt_out(@options)
+      @user.try(:touch)
       redirect_to subscription_path(params[:id])
     end
 
     def subscribe
       Mailkick.opt_in(@options)
+      @user.try(:touch)
       redirect_to subscription_path(params[:id])
     end
 
