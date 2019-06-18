@@ -4,7 +4,7 @@ module Mailkick
       email_key = opts[:email_key] || :email
       class_eval do
         scope :opted_out, lambda { |options = {}|
-          binds = [self.name, true]
+          binds = [name, true]
           if options[:list]
             query = "(mailkick_opt_outs.list IS NULL OR mailkick_opt_outs.list = ?)"
             binds << options[:list]

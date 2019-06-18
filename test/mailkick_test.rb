@@ -38,6 +38,11 @@ class MailkickTest < Minitest::Test
     assert_equal 1, User.opted_out.count
   end
 
+  def test_user_not_opted_out
+    User.create!
+    assert_equal 1, User.not_opted_out.count
+  end
+
   def test_instance_methods
     email = "test2@example.org"
     user = User.create!(email: email)
