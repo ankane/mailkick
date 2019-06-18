@@ -1,6 +1,7 @@
 ## 0.3.2 [unreleased]
 
 - Fixed error with model methods and `email_key` option
+- Fixed bug with `opted_out` scope
 
 ## 0.3.1
 
