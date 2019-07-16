@@ -31,11 +31,7 @@ module Mailkick
         list: @list
       }
     rescue ActiveSupport::MessageVerifier::InvalidSignature
-      if Rails::VERSION::MAJOR >= 5
-        render plain: "Subscription not found", status: :bad_request
-      else
-        render text: "Subscription not found", status: :bad_request
-      end
+      render plain: "Subscription not found", status: :bad_request
     end
 
     def opted_out?

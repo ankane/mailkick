@@ -1,7 +1,8 @@
+# dependencies
 require "set"
 require "active_support"
 
-require "mailkick/engine" if defined?(Rails)
+# modules
 require "mailkick/model"
 require "mailkick/service"
 require "mailkick/service/mailchimp"
@@ -9,6 +10,9 @@ require "mailkick/service/mailgun"
 require "mailkick/service/mandrill"
 require "mailkick/service/sendgrid"
 require "mailkick/version"
+
+# integrations
+require "mailkick/engine" if defined?(Rails)
 
 module Mailkick
   mattr_accessor :services, :user_method, :secret_token, :mount
