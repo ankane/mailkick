@@ -1,4 +1,4 @@
-## 0.4.0 [unreleased]
+## 0.4.0
 
 - Fixed error with model methods and `email_key` option
 - Fixed bug with `opted_out` scope
