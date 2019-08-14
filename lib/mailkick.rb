@@ -9,6 +9,7 @@ require "mailkick/service/mailchimp"
 require "mailkick/service/mailgun"
 require "mailkick/service/mandrill"
 require "mailkick/service/sendgrid"
+require "mailkick/service/postmark"
 require "mailkick/version"
 
 # integrations
