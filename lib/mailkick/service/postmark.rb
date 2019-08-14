@@ -13,12 +13,12 @@ module Mailkick
         @client = ::Postmark::ApiClient.new(options[:api_key] || ENV["POSTMARK_API_KEY"])
       end
 
-      def opt_outs(options = {})
-        bounces(count: options[:bounce_count], offset: options[:offset])
+      def opt_outs
+        bounces
       end
 
-      def bounces(options = {})
-        fetch(@client.get_bounces(count: options[:count], offset: options[:offset]))
+      def bounces
+        fetch(@client.bounces)
       end
 
       def self.discoverable?
