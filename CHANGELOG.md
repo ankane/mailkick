@@ -1,3 +1,7 @@
+## 0.4.1 [unreleased]
+
+- Added Postmark support
+
 ## 0.4.0
 
 - Fixed error with model methods and `email_key` option
