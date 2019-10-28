@@ -123,7 +123,7 @@ gem 'mailgun-ruby'
 
 Be sure `ENV["MAILGUN_API_KEY"]` is set.
 
-#### Postmark [master]
+#### Postmark
 
 ```ruby
 gem 'postmark'
