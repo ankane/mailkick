@@ -89,35 +89,15 @@ Fetch bounces, spam reports, and unsubscribes from your email service.
 Mailkick.fetch_opt_outs
 ```
 
-#### SendGrid V2 [master]
+The following services are supported:
 
-Add the gem
+- [Mailchimp](#mailchimp)
+- [Mailgun](#mailgun)
+- [Mandrill](#mandrill)
+- [Postmark](#postmark)
+- [SendGrid](#sendgrid-v2-master)
 
-```ruby
-gem 'sendgrid-ruby'
-```
-
-And set `ENV["SENDGRID_API_KEY"]`. The API key requires only the `Suppressions` permission.
-
-#### SendGrid
-
-Add the gem
-
-```ruby
-gem 'sendgrid_toolkit'
-```
-
-And set `ENV["SENDGRID_USERNAME"]` and `ENV["SENDGRID_PASSWORD"]`.
-
-#### Mandrill
-
-Add the gem
-
-```ruby
-gem 'mandrill-api'
-```
-
-And set `ENV["MANDRILL_APIKEY"]`.
+Will gladly accept pull requests for others.
 
 #### Mailchimp
 
@@ -139,6 +119,16 @@ gem 'mailgun-ruby'
 
 And set `ENV["MAILGUN_API_KEY"]`.
 
+#### Mandrill
+
+Add the gem
+
+```ruby
+gem 'mandrill-api'
+```
+
+And set `ENV["MANDRILL_APIKEY"]`.
+
 #### Postmark
 
 Add the gem
@@ -149,9 +139,25 @@ gem 'postmark'
 
 And set `ENV["POSTMARK_API_KEY"]`.
 
-#### Other
+#### SendGrid V2 [master]
 
-Will gladly accept pull requests.
+Add the gem
+
+```ruby
+gem 'sendgrid-ruby'
+```
+
+And set `ENV["SENDGRID_API_KEY"]`. The API key requires only the `Suppressions` permission.
+
+#### SendGrid
+
+Add the gem
+
+```ruby
+gem 'sendgrid_toolkit'
+```
+
+And set `ENV["SENDGRID_USERNAME"]` and `ENV["SENDGRID_PASSWORD"]`.
 
 ### Advanced
 
