@@ -89,6 +89,16 @@ Fetch bounces, spam reports, and unsubscribes from your email service.
 Mailkick.fetch_opt_outs
 ```
 
+#### SendGrid V2 [master]
+
+Add the gem
+
+```ruby
+gem 'sendgrid-ruby'
+```
+
+And set `ENV["SENDGRID_API_KEY"]`. The API key requires only the `Suppressions` permission.
+
 #### SendGrid
 
 Add the gem
@@ -97,39 +107,47 @@ Add the gem
 gem 'sendgrid_toolkit'
 ```
 
-Be sure `ENV["SENDGRID_USERNAME"]` and `ENV["SENDGRID_PASSWORD"]` are set.
+And set `ENV["SENDGRID_USERNAME"]` and `ENV["SENDGRID_PASSWORD"]`.
 
 #### Mandrill
+
+Add the gem
 
 ```ruby
 gem 'mandrill-api'
 ```
 
-Be sure `ENV["MANDRILL_APIKEY"]` is set.
+And set `ENV["MANDRILL_APIKEY"]`.
 
 #### Mailchimp
+
+Add the gem
 
 ```ruby
 gem 'gibbon', '>= 2'
 ```
 
-Be sure `ENV["MAILCHIMP_API_KEY"]` and `ENV["MAILCHIMP_LIST_ID"]` are set.
+And set `ENV["MAILCHIMP_API_KEY"]` and `ENV["MAILCHIMP_LIST_ID"]`.
 
 #### Mailgun
+
+Add the gem
 
 ```ruby
 gem 'mailgun-ruby'
 ```
 
-Be sure `ENV["MAILGUN_API_KEY"]` is set.
+And set `ENV["MAILGUN_API_KEY"]`.
 
 #### Postmark
+
+Add the gem
 
 ```ruby
 gem 'postmark'
 ```
 
-Be sure `ENV["POSTMARK_API_KEY"]` is set.
+And set `ENV["POSTMARK_API_KEY"]`.
 
 #### Other
 
