@@ -1,3 +1,7 @@
+## 0.4.2 (unreleased)
+
+- Added support for official SendGrid gem
+
 ## 0.4.1 (2019-10-27)
 
 - Added Postmark support

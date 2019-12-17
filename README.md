@@ -89,7 +89,7 @@ Fetch bounces, spam reports, and unsubscribes from your email service.
 Mailkick.fetch_opt_outs
 ```
 
-#### Sendgrid
+#### SendGrid
 
 Add the gem
 
