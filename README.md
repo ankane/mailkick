@@ -159,8 +159,8 @@ For more control over services, set them by hand.
 
 ```ruby
 Mailkick.services = [
-  Mailkick::Service::Sendgrid.new(api_key: "API_KEY"),
-  Mailkick::Service::Mandrill.new(api_key: "API_KEY")
+  Mailkick::Service::SendGridV2.new(api_key: "API_KEY"),
+  Mailkick::Service::Mailchimp.new(api_key: "API_KEY", list_id: "LIST_ID")
 ]
 ```
 
