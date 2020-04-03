@@ -17,10 +17,6 @@ module Mailkick
 
         creds.respond_to?(:secret_key_base) ? creds.secret_key_base : creds.secret_token
       end
-
-      ActiveSupport.on_load :action_mailer do
-        helper Mailkick::UrlHelper
-      end
     end
   end
 end

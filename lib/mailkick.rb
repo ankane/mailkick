@@ -1,6 +1,8 @@
 # dependencies
-require "set"
 require "active_support"
+
+# stdlib
+require "set"
 
 # modules
 require "mailkick/model"
@@ -11,6 +13,7 @@ require "mailkick/service/mandrill"
 require "mailkick/service/sendgrid"
 require "mailkick/service/sendgrid_v2"
 require "mailkick/service/postmark"
+require "mailkick/url_helper"
 require "mailkick/version"
 
 # integrations
@@ -103,6 +106,10 @@ module Mailkick
     user ||= Mailkick.user_method.call(email) if Mailkick.user_method
     message_verifier.generate([email, user.try(:id), user.try(:class).try(:name), list])
   end
+end
+
+ActiveSupport.on_load :action_mailer do
+  helper Mailkick::UrlHelper
 end
 
 ActiveSupport.on_load(:active_record) do
