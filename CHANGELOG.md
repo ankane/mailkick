@@ -1,6 +1,7 @@
-## 0.4.2 (unreleased)
+## 0.4.2 (2020-04-06)
 
 - Added support for official SendGrid gem
+- Fixed deprecation warning
 
 ## 0.4.1 (2019-10-27)
 

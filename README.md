@@ -95,7 +95,7 @@ The following services are supported:
 - [Mailgun](#mailgun)
 - [Mandrill](#mandrill)
 - [Postmark](#postmark)
-- [SendGrid](#sendgrid-v2-master)
+- [SendGrid](#sendgrid)
 
 Will gladly accept pull requests for others.
 
@@ -139,7 +139,7 @@ gem 'postmark'
 
 And set `ENV["POSTMARK_API_KEY"]`.
 
-#### SendGrid V2 [master]
+#### SendGrid
 
 Add the gem
 
@@ -148,16 +148,6 @@ gem 'sendgrid-ruby'
 ```
 
 And set `ENV["SENDGRID_API_KEY"]`. The API key requires only the `Suppressions` permission.
-
-#### SendGrid
-
-Add the gem
-
-```ruby
-gem 'sendgrid_toolkit'
-```
-
-And set `ENV["SENDGRID_USERNAME"]` and `ENV["SENDGRID_PASSWORD"]`.
 
 ### Advanced
 
