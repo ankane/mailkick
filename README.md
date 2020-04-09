@@ -231,6 +231,19 @@ Access the opt-out model directly
 Mailkick::OptOut.all
 ```
 
+## UUID Support
+
+
+> If you are using UUID's for your database, update the primary key and reference like below. 
+> Associated Error: `PG::InvalidTextRepresentation: ERROR: invalid input syntax for integer:`
+```ruby
+def change
+  create_table :mailkick_opt_outs, id: :uuid do |t|
+    # ...
+    t.references :user, polymorphic: true, type: :uuid
+    # ...
+end
+```
 ## History
 
 View the [changelog](https://github.com/ankane/mailkick/blob/master/CHANGELOG.md)
