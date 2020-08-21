@@ -91,6 +91,7 @@ Mailkick.fetch_opt_outs
 
 The following services are supported:
 
+- [AWS SES](#aws-ses) [master]
 - [Mailchimp](#mailchimp)
 - [Mailgun](#mailgun)
 - [Mandrill](#mandrill)
@@ -98,6 +99,16 @@ The following services are supported:
 - [SendGrid](#sendgrid)
 
 Will gladly accept pull requests for others.
+
+#### AWS SES
+
+Add the gem
+
+```ruby
+gem 'aws-sdk-sesv2'
+```
+
+And [configure your AWS credentials](https://github.com/aws/aws-sdk-ruby#configuration). Requires `ses:ListSuppressedDestinations` permission.
 
 #### Mailchimp
 

@@ -7,6 +7,7 @@ require "set"
 # modules
 require "mailkick/model"
 require "mailkick/service"
+require "mailkick/service/aws_ses"
 require "mailkick/service/mailchimp"
 require "mailkick/service/mailgun"
 require "mailkick/service/mandrill"

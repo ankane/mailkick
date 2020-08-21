@@ -1,3 +1,7 @@
+## 0.4.3 (unreleased)
+
+- Added support for AWS SES
+
 ## 0.4.2 (2020-04-06)
 
 - Added support for official SendGrid gem
