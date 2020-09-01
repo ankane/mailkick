@@ -3,7 +3,7 @@ require_relative "lib/mailkick/version"
 Gem::Specification.new do |spec|
   spec.name          = "mailkick"
   spec.version       = Mailkick::VERSION
-  spec.summary       = "Email subscriptions made easy"
+  spec.summary       = "Email unsubscribes for Rails"
   spec.homepage      = "https://github.com/ankane/mailkick"
   spec.license       = "MIT"
 

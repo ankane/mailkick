@@ -1,6 +1,6 @@
 # Mailkick
 
-Email subscriptions made easy
+Email unsubscribes for Rails
 
 - Add one-click unsubscribe links to your emails
 - Fetch bounces and spam reports from your email service
