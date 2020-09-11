@@ -66,17 +66,16 @@ module Mailkick
   def self.opt_outs(options = {})
     relation = Mailkick::OptOut.where(active: true)
 
-    parts = []
-    binds = []
+    contact_relation = Mailkick::OptOut.none
     if (email = options[:email])
-      parts << "email = ?"
-      binds << email
+      contact_relation = contact_relation.or(Mailkick::OptOut.where(email: email))
     end
     if (user = options[:user])
-      parts << "(user_id = ? and user_type = ?)"
-      binds.concat [user.id, user.class.name]
+      contact_relation = contact_relation.or(
+        Mailkick::OptOut.where("user_id = ? AND user_type = ?", user.id, user.class.name)
+      )
     end
-    relation = relation.where(parts.join(" OR "), *binds) if parts.any?
+    relation = relation.merge(contact_relation) if email || user
 
     relation =
       if options[:list]
