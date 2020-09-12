@@ -32,6 +32,48 @@ class MailkickTest < Minitest::Test
     assert_equal 0, User.not_opted_out.count
   end
 
+  def test_opt_outs
+    user1 = User.create!(email: 'user1@example.org')
+    user2 = User.create!(email: 'user2@example.org')
+    user3 = User.create!(email: 'user3@example.org')
+    user4 = User.create!(email: 'user4@example.org')
+
+    Mailkick.opt_out(email: user1.email, user: user1)
+    Mailkick.opt_out(email: 'other2@example.org', user: user2)
+    Mailkick.opt_out(email: 'other3@example.org')
+    Mailkick.opt_out(user: user3)
+
+    opt_outs = Mailkick.opt_outs
+    assert_equal 4, opt_outs.size
+
+    opt_outs = Mailkick.opt_outs(email: user1.email)
+    assert_equal 1, opt_outs.size
+
+    opt_outs = Mailkick.opt_outs(email: user2.email)
+    assert_equal 0, opt_outs.size
+
+    opt_outs = Mailkick.opt_outs(email: 'other2@example.org')
+    assert_equal 1, opt_outs.size
+
+    opt_outs = Mailkick.opt_outs(user: user2)
+    assert_equal 1, opt_outs.size
+
+    opt_outs = Mailkick.opt_outs(email: user2.email, user: user2)
+    assert_equal 1, opt_outs.size
+
+    opt_outs = Mailkick.opt_outs(email: 'other3@example.org', user: user2)
+    assert_equal 2, opt_outs.size
+
+    opt_outs = Mailkick.opt_outs(user: user3)
+    assert_equal 1, opt_outs.size
+
+    opt_outs = Mailkick.opt_outs(email: 'other4@example.org')
+    assert_equal 0, opt_outs.size
+
+    opt_outs = Mailkick.opt_outs(user: user4)
+    assert_equal 0, opt_outs.size
+  end
+
   def test_user_opted_out_scope
     user = User.create!
     user.opt_out
