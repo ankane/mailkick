@@ -87,13 +87,15 @@ module Mailkick
     relation
   end
 
+  # TODO use keyword arguments
   def self.opted_out_emails(options = {})
-    Set.new(opt_outs(options).where("email IS NOT NULL").uniq.pluck(:email))
+    Set.new(opt_outs(options).where.not(email: nil).distinct.pluck(:email))
   end
 
+  # TODO use keyword arguments
   # does not take into account emails
   def self.opted_out_users(options = {})
-    Set.new(opt_outs(options).where("user_id IS NOT NULL").map(&:user))
+    Set.new(opt_outs(options).where.not(user_id: nil).map(&:user))
   end
 
   def self.message_verifier

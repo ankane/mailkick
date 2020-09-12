@@ -30,6 +30,9 @@ class MailkickTest < Minitest::Test
     assert user.opted_out?
     assert_equal 1, User.opted_out.count
     assert_equal 0, User.not_opted_out.count
+
+    assert_equal Set.new([email]), Mailkick.opted_out_emails
+    assert_equal Set.new([user]), Mailkick.opted_out_users
   end
 
   def test_opt_outs
