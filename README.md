@@ -91,7 +91,7 @@ Mailkick.fetch_opt_outs
 
 The following services are supported:
 
-- [AWS SES](#aws-ses) [master]
+- [AWS SES](#aws-ses)
 - [Mailchimp](#mailchimp)
 - [Mailgun](#mailgun)
 - [Mandrill](#mandrill)
