@@ -8,7 +8,7 @@ Email unsubscribes for Rails
 
 :postbox: Check out [Ahoy Email](https://github.com/ankane/ahoy_email) for analytics
 
-[![Build Status](https://travis-ci.org/ankane/mailkick.svg?branch=master)](https://travis-ci.org/ankane/mailkick)
+[![Build Status](https://github.com/ankane/mailkick/workflows/build/badge.svg?branch=master)](https://github.com/ankane/mailkick/actions)
 
 ## Installation
 
