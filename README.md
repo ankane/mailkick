@@ -110,6 +110,8 @@ gem 'aws-sdk-sesv2'
 
 And [configure your AWS credentials](https://github.com/aws/aws-sdk-ruby#configuration). Requires `ses:ListSuppressedDestinations` permission.
 
+If you started using Amazon SES [before November 25, 2019](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-email-suppression-list.html#sending-email-suppression-list-considerations), you have to manually [enable account-level suppression list feature](https://docs.aws.amazon.com/ses/latest/APIReference-V2/API_PutAccountSuppressionAttributes.html).
+
 #### Mailchimp
 
 Add the gem
