@@ -1,19 +1,6 @@
 require_relative "test_helper"
 
-class MailkickTest < Minitest::Test
-  def setup
-    User.delete_all
-    Mailkick::OptOut.delete_all
-  end
-
-  def test_unsubscribe_url
-    message = UserMailer.welcome.deliver_now
-    html_body = message.html_part.body.to_s
-    assert_includes html_body, "unsubscribe"
-    text_body = message.text_part.body.to_s
-    assert_includes text_body, "unsubscribe"
-  end
-
+class ModelTest < Minitest::Test
   def test_opt_out
     email = "test2@example.org"
     user = User.create!(email: email)

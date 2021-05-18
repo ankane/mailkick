@@ -1,10 +1,6 @@
 require_relative "test_helper"
 
 class ControllerTest < ActionDispatch::IntegrationTest
-  def setup
-    Mailkick::OptOut.delete_all
-  end
-
   def test_unsubscribe_url
     message = UserMailer.welcome.deliver_now
     text_body = message.text_part.body.to_s
