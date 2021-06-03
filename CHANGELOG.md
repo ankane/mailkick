@@ -1,3 +1,7 @@
+## 1.0.0 (unreleased)
+
+- Switched from opt-outs to subscriptions
+
 ## 0.4.3 (2020-11-01)
 
 - Added support for AWS SES
