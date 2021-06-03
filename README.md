@@ -214,7 +214,7 @@ rails generate mailkick:install
 rails db:migrate
 ```
 
-2. Change the following methods in your code
+2. Change the following methods in your code:
 
 - `mailkick_user` to `has_subscriptions`
 - `User.not_opted_out` to `User.subscribed(list)`
