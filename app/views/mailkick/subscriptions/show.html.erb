@@ -24,7 +24,7 @@
   </head>
   <body>
     <div class="container">
-      <% if opted_out? %>
+      <% if !subscribed? %>
         <p>You are unsubscribed.</p>
         <p><%= link_to "Resubscribe", subscribe_url %></p>
       <% else %>

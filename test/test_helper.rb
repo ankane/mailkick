@@ -13,6 +13,7 @@ ActionMailer::Base.delivery_method = :test
 class Minitest::Test
   def setup
     User.delete_all
+    Mailkick::Subscription.delete_all
     Mailkick::OptOut.delete_all
   end
 end

@@ -2,17 +2,20 @@ require_relative "test_helper"
 
 class ControllerTest < ActionDispatch::IntegrationTest
   def test_unsubscribe_url
-    message = UserMailer.welcome.deliver_now
+    user = User.create!
+    user.subscribe("sales")
+    message = UserMailer.with(user: user).welcome.deliver_now
     text_body = message.text_part.body.to_s
     url = /Unsubscribe: (.+)/.match(text_body)[1]
 
     get url
     assert_response :redirect
-    assert_equal 1, Mailkick::OptOut.count
+    refute user.subscribed?("sales")
   end
 
   def test_bad_signature
-    message = UserMailer.welcome.deliver_now
+    user = User.create!
+    message = UserMailer.with(user: user).welcome.deliver_now
     text_body = message.text_part.body.to_s
     url = /Unsubscribe: (.+)/.match(text_body)[1]
 

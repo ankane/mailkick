@@ -8,34 +8,44 @@ module Mailkick
     end
 
     def unsubscribe
-      Mailkick.opt_out(@options)
+      subscription.delete_all
+
+      Mailkick::Legacy.opt_out(legacy_options) if Mailkick::Legacy.opt_outs?
+
       redirect_to subscription_path(params[:id])
     end
 
     def subscribe
-      Mailkick.opt_in(@options)
+      subscription.first_or_create!
+
+      Mailkick::Legacy.opt_in(legacy_options) if Mailkick::Legacy.opt_outs?
+
       redirect_to subscription_path(params[:id])
     end
 
     protected
 
     def set_email
-      @email, user_id, user_type, @list = Mailkick.message_verifier.verify(params[:id])
-      if user_type
-        # on the unprobabilistic chance user_type is compromised, not much damage
-        @user = user_type.constantize.find(user_id)
-      end
-      @options = {
-        email: @email,
-        user: @user,
-        list: @list
-      }
+      @email, @subscriber_id, @subscriber_type, @list = Mailkick.message_verifier.verify(params[:id])
     rescue ActiveSupport::MessageVerifier::InvalidSignature
       render plain: "Subscription not found", status: :bad_request
     end
 
+    def subscription
+      Mailkick::Subscription.where(
+        subscriber_id: @subscriber_id,
+        subscriber_type: @subscriber_type,
+        list: @list
+      )
+    end
+
+    def subscribed?
+      subscription.exists?
+    end
+    helper_method :subscribed?
+
     def opted_out?
-      Mailkick.opted_out?(@options)
+      !subscribed?
     end
     helper_method :opted_out?
 
@@ -48,5 +58,17 @@ module Mailkick
       unsubscribe_subscription_path(params[:id])
     end
     helper_method :unsubscribe_url
+
+    def legacy_options
+      if @subscriber_type
+        # on the unprobabilistic chance subscriber_type is compromised, not much damage
+        user = @subscriber_type.constantize.find(@subscriber_id)
+      end
+      {
+        email: @email,
+        user: user,
+        list: @list
+      }
+    end
   end
 end

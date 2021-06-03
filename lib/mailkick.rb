@@ -5,6 +5,7 @@ require "active_support"
 require "set"
 
 # modules
+require "mailkick/legacy"
 require "mailkick/model"
 require "mailkick/service"
 require "mailkick/service/aws_ses"
@@ -21,10 +22,10 @@ require "mailkick/version"
 require "mailkick/engine" if defined?(Rails)
 
 module Mailkick
-  mattr_accessor :services, :user_method, :secret_token, :mount
+  mattr_accessor :services, :secret_token, :mount, :process_opt_outs_method
   self.services = []
-  self.user_method = ->(email) { User.where(email: email).first rescue nil }
   self.mount = true
+  self.process_opt_outs_method = -> { raise "process_opt_outs_method not defined" }
 
   def self.fetch_opt_outs
     services.each(&:fetch_opt_outs)
@@ -36,77 +37,15 @@ module Mailkick
     end
   end
 
-  def self.opted_out?(options)
-    opt_outs(options).any?
-  end
-
-  def self.opt_out(options)
-    unless opted_out?(options)
-      time = options[:time] || Time.now
-      Mailkick::OptOut.create! do |o|
-        o.email = options[:email]
-        o.user = options[:user]
-        o.reason = options[:reason] || "unsubscribe"
-        o.list = options[:list]
-        o.created_at = time
-        o.updated_at = time
-      end
-    end
-    true
-  end
-
-  def self.opt_in(options)
-    opt_outs(options).each do |opt_out|
-      opt_out.active = false
-      opt_out.save!
-    end
-    true
-  end
-
-  def self.opt_outs(options = {})
-    relation = Mailkick::OptOut.where(active: true)
-
-    contact_relation = Mailkick::OptOut.none
-    if (email = options[:email])
-      contact_relation = contact_relation.or(Mailkick::OptOut.where(email: email))
-    end
-    if (user = options[:user])
-      contact_relation = contact_relation.or(
-        Mailkick::OptOut.where("user_id = ? AND user_type = ?", user.id, user.class.name)
-      )
-    end
-    relation = relation.merge(contact_relation) if email || user
-
-    relation =
-      if options[:list]
-        relation.where("list IS NULL OR list = ?", options[:list])
-      else
-        relation.where("list IS NULL")
-      end
-
-    relation
-  end
-
-  # TODO use keyword arguments
-  def self.opted_out_emails(options = {})
-    Set.new(opt_outs(options).where.not(email: nil).distinct.pluck(:email))
-  end
-
-  # TODO use keyword arguments
-  # does not take into account emails
-  def self.opted_out_users(options = {})
-    Set.new(opt_outs(options).where.not(user_id: nil).map(&:user))
-  end
-
   def self.message_verifier
     @message_verifier ||= ActiveSupport::MessageVerifier.new(Mailkick.secret_token)
   end
 
-  def self.generate_token(email, user: nil, list: nil)
-    raise ArgumentError, "Missing email" unless email
+  def self.generate_token(subscriber, list)
+    raise ArgumentError, "Missing subscriber" unless subscriber
+    raise ArgumentError, "Missing list" unless list.present?
 
-    user ||= Mailkick.user_method.call(email) if Mailkick.user_method
-    message_verifier.generate([email, user.try(:id), user.try(:class).try(:name), list])
+    message_verifier.generate([nil, subscriber.id, subscriber.class.name, list])
   end
 end
 

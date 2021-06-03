@@ -7,7 +7,7 @@ module Mailkick
       source_root File.join(__dir__, "templates")
 
       def copy_migration
-        migration_template "install.rb", "db/migrate/install_mailkick.rb", migration_version: migration_version
+        migration_template "install.rb", "db/migrate/create_mailkick_subscriptions.rb", migration_version: migration_version
       end
 
       def migration_version

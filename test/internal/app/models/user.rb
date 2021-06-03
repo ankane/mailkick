@@ -1,3 +1,3 @@
 class User < ActiveRecord::Base
-  mailkick_user
+  has_subscriptions
 end
