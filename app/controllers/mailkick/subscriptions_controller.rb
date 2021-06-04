@@ -2,7 +2,7 @@ module Mailkick
   class SubscriptionsController < ActionController::Base
     protect_from_forgery with: :exception
 
-    before_action :set_email
+    before_action :set_subscription
 
     def show
     end
@@ -25,7 +25,7 @@ module Mailkick
 
     protected
 
-    def set_email
+    def set_subscription
       @email, @subscriber_id, @subscriber_type, @list = Mailkick.message_verifier.verify(params[:id])
     rescue ActiveSupport::MessageVerifier::InvalidSignature
       render plain: "Subscription not found", status: :bad_request
