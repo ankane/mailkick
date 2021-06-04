@@ -1,6 +1,7 @@
 ## 1.0.0 (2021-06-03)
 
 - Switched from opt-outs to subscriptions
+- Dropped support for Ruby < 2.6 and Rails < 5.2
 
 ## 0.4.3 (2020-11-01)
 
