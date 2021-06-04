@@ -97,7 +97,7 @@ Mailkick.process_opt_outs_method = lambda do |opt_outs|
     next unless subscriber
 
     subscriber.mailkick_subscriptions.each do |subscription|
-      subscription.destroy if subscription.updated_at < opt_out[:time]
+      subscription.destroy if subscription.created_at < opt_out[:time]
     end
   end
 end
