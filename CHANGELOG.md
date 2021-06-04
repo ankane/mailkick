@@ -1,4 +1,4 @@
-## 1.0.0 (unreleased)
+## 1.0.0 (2021-06-03)
 
 - Switched from opt-outs to subscriptions
 
