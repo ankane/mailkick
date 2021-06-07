@@ -2,7 +2,10 @@ require_relative "test_helper"
 
 class TestService < Mailkick::Service
   def opt_outs
-    [{email: "test@example.com", time: Time.now}]
+    [
+      {email: "test@example.com", time: Time.current},
+      {email: "test2@example.com", time: 1.day.ago},
+    ]
   end
 end
 
@@ -21,6 +24,9 @@ class ServiceTest < Minitest::Test
     user = User.create!(email: "test@example.com")
     user.subscribe("sales")
 
+    user2 = User.create!(email: "test2@example.com")
+    user2.subscribe("sales")
+
     previous_method = Mailkick.process_opt_outs_method
     begin
       Mailkick.process_opt_outs_method = lambda do |opt_outs|
@@ -36,8 +42,11 @@ class ServiceTest < Minitest::Test
           end
         end
       end
+
       Mailkick.fetch_opt_outs
+
       refute user.subscribed?("sales")
+      assert user2.subscribed?("sales")
     ensure
       Mailkick.process_opt_outs_method = previous_method
     end
