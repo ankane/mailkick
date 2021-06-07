@@ -1,3 +1,7 @@
+## 1.0.1 (unreleased)
+
+- Fixed error message when process out-opts not configured
+
 ## 1.0.0 (2021-06-03)
 
 - Switched from opt-outs to subscriptions

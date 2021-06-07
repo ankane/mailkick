@@ -25,7 +25,7 @@ module Mailkick
   mattr_accessor :services, :secret_token, :mount, :process_opt_outs_method
   self.services = []
   self.mount = true
-  self.process_opt_outs_method = -> { raise "process_opt_outs_method not defined" }
+  self.process_opt_outs_method = ->(_) { raise "process_opt_outs_method not defined" }
 
   def self.fetch_opt_outs
     services.each(&:fetch_opt_outs)
