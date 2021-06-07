@@ -3,8 +3,8 @@ require_relative "test_helper"
 class TestService < Mailkick::Service
   def opt_outs
     [
-      {email: "test@example.com", time: Time.current},
-      {email: "test2@example.com", time: 1.day.ago},
+      {email: "test@example.com", time: Time.current, reason: "bounce"},
+      {email: "test2@example.com", time: 1.day.ago, reason: "spam"}
     ]
   end
 end
