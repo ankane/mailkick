@@ -220,6 +220,8 @@ rails db:migrate
 - `User.not_opted_out` to `User.subscribed(list)`
 - `opt_in` to `subscribe(list)`
 - `opt_out` to `unsubscribe(list)`
+- `opted_out?(list:)` to `!subscribed?(list)`
+- `opted_out?` (in views) to `!subscribed?`
 
 3. Add a user and list to `mailkick_unsubscribe_url`
 
