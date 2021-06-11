@@ -205,7 +205,11 @@ Mailkick::Subscription.all
 
 ### 1.0
 
-Mailkick 1.0 stores subscriptions instead of opt-outs. To migrate:
+Mailkick 1.0 stores subscriptions instead of opt-outs.
+
+That means users users are **opted out by default** instead of being opted in by default, you need to create the subscription.
+
+To migrate:
 
 1. Add a table to store subscriptions
 
@@ -245,7 +249,7 @@ User.find_in_batches do |users|
       {
         subscriber_type: user.class.name,
         subscriber_id: user.id,
-        list: "sales",
+        list: YOUR_LIST_NAME,
         created_at: now,
         updated_at: now
       }
