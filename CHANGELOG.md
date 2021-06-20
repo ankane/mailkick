@@ -1,4 +1,4 @@
-## 1.0.1 (unreleased)
+## 1.0.1 (2021-06-20)
 
 - Fixed error message when process out-opts not configured
 
