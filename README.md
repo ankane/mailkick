@@ -16,7 +16,7 @@ Email subscriptions for Rails
 Add this line to your application’s Gemfile:
 
 ```ruby
-gem 'mailkick'
+gem "mailkick"
 ```
 
 And run the generator. This creates a table to store subscriptions.
@@ -125,7 +125,7 @@ Will gladly accept pull requests for others.
 Add the gem
 
 ```ruby
-gem 'aws-sdk-sesv2'
+gem "aws-sdk-sesv2"
 ```
 
 And [configure your AWS credentials](https://github.com/aws/aws-sdk-ruby#configuration). Requires `ses:ListSuppressedDestinations` permission.
@@ -137,7 +137,7 @@ If you started using Amazon SES [before November 25, 2019](https://docs.aws.amaz
 Add the gem
 
 ```ruby
-gem 'gibbon', '>= 2'
+gem "gibbon", ">= 2"
 ```
 
 And set `ENV["MAILCHIMP_API_KEY"]` and `ENV["MAILCHIMP_LIST_ID"]`.
@@ -147,7 +147,7 @@ And set `ENV["MAILCHIMP_API_KEY"]` and `ENV["MAILCHIMP_LIST_ID"]`.
 Add the gem
 
 ```ruby
-gem 'mailgun-ruby'
+gem "mailgun-ruby"
 ```
 
 And set `ENV["MAILGUN_API_KEY"]`.
@@ -157,7 +157,7 @@ And set `ENV["MAILGUN_API_KEY"]`.
 Add the gem
 
 ```ruby
-gem 'mandrill-api'
+gem "mandrill-api"
 ```
 
 And set `ENV["MANDRILL_APIKEY"]`.
@@ -167,7 +167,7 @@ And set `ENV["MANDRILL_APIKEY"]`.
 Add the gem
 
 ```ruby
-gem 'postmark'
+gem "postmark"
 ```
 
 And set `ENV["POSTMARK_API_KEY"]`.
@@ -177,7 +177,7 @@ And set `ENV["POSTMARK_API_KEY"]`.
 Add the gem
 
 ```ruby
-gem 'sendgrid-ruby'
+gem "sendgrid-ruby"
 ```
 
 And set `ENV["SENDGRID_API_KEY"]`. The API key requires only the `Suppressions` permission.
