@@ -5,8 +5,6 @@ Email subscriptions for Rails
 - Add one-click unsubscribe links to your emails
 - Fetch bounces and spam reports from your email service
 
-**Mailkick 1.0 was recently released** - see [how to upgrade](#upgrading)
-
 :postbox: Check out [Ahoy Email](https://github.com/ankane/ahoy_email) for analytics
 
 [![Build Status](https://github.com/ankane/mailkick/workflows/build/badge.svg?branch=master)](https://github.com/ankane/mailkick/actions)
