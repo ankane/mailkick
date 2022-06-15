@@ -22,7 +22,11 @@ require "mailkick/version"
 require "mailkick/engine" if defined?(Rails)
 
 module Mailkick
-  mattr_accessor :services, :secret_token, :mount, :process_opt_outs_method
+  mattr_accessor :services, :message_verifier, :mount, :process_opt_outs_method
+
+  # Deprecated
+  mattr_accessor :secret_token
+
   self.services = []
   self.mount = true
   self.process_opt_outs_method = ->(_) { raise "process_opt_outs_method not defined" }
@@ -35,10 +39,6 @@ module Mailkick
     Service.subclasses.each do |service|
       services << service.new if service.discoverable?
     end
-  end
-
-  def self.message_verifier
-    @message_verifier ||= ActiveSupport::MessageVerifier.new(Mailkick.secret_token)
   end
 
   def self.generate_token(subscriber, list)
