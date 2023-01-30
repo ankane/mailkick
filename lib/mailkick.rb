@@ -2,11 +2,13 @@
 require "active_support"
 
 # stdlib
+require "json"
 require "set"
 
 # modules
 require "mailkick/legacy"
 require "mailkick/model"
+require "mailkick/serializer"
 require "mailkick/service"
 require "mailkick/service/aws_ses"
 require "mailkick/service/mailchimp"
@@ -44,10 +46,8 @@ module Mailkick
     @@message_verifier = nil
   end
 
-  # TODO use JSON serializer
-  # can't currently rotate serializer without rotating token or digest
   def self.message_verifier
-    @@message_verifier ||= ActiveSupport::MessageVerifier.new(Mailkick.secret_token)
+    @@message_verifier ||= ActiveSupport::MessageVerifier.new(Mailkick.secret_token, serializer: Serializer)
   end
 
   def self.generate_token(subscriber, list)

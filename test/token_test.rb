@@ -17,9 +17,16 @@ class TokenTest < Minitest::Test
     assert_equal [nil, 1, "User", "sales"], Mailkick.message_verifier.verify(message)
   end
 
-  def test_custom_token
+  def test_custom_token_v1
     with_secret_token("1" * 128) do
       message = "BAhbCTBpBkkiCVVzZXIGOgZFRkkiCnNhbGVzBjsAVA==--e37be0a9c71177dd4d2dcb078e8bf744bab5b955"
+      assert_equal [nil, 1, "User", "sales"], Mailkick.message_verifier.verify(message)
+    end
+  end
+
+  def test_custom_token_v2
+    with_secret_token("1" * 128) do
+      message = "W251bGwsMSwiVXNlciIsInNhbGVzIl0=--fb88c71ff1d08d86ffd05b19674c162588aad283"
       assert_equal [nil, 1, "User", "sales"], Mailkick.message_verifier.verify(message)
     end
   end

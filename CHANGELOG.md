@@ -1,6 +1,11 @@
+## 1.1.1 (unreleased)
+
+- Switched to JSON for serialization with non-default `secret_token`
+
 ## 1.1.0 (2023-01-29)
 
 - Improved secret token generation
+- Switched to JSON for serialization with default `secret_token`
 
 ## 1.0.1 (2021-06-20)
 
