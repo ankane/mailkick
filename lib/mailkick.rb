@@ -58,7 +58,7 @@ module Mailkick
   end
 end
 
-ActiveSupport.on_load :action_mailer do
+ActiveSupport.on_load(:action_mailer) do
   helper Mailkick::UrlHelper
 end
 
