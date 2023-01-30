@@ -44,6 +44,8 @@ module Mailkick
     @@message_verifier = nil
   end
 
+  # TODO use JSON serializer
+  # can't currently rotate serializer without rotating token or digest
   def self.message_verifier
     @@message_verifier ||= ActiveSupport::MessageVerifier.new(Mailkick.secret_token)
   end
