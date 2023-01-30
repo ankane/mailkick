@@ -24,6 +24,7 @@ require "mailkick/engine" if defined?(Rails)
 module Mailkick
   mattr_accessor :services, :mount, :process_opt_outs_method
   mattr_reader :secret_token
+  mattr_writer :message_verifier
   self.services = []
   self.mount = true
   self.process_opt_outs_method = ->(_) { raise "process_opt_outs_method not defined" }
@@ -44,7 +45,7 @@ module Mailkick
   end
 
   def self.message_verifier
-    @message_verifier ||= ActiveSupport::MessageVerifier.new(Mailkick.secret_token)
+    @@message_verifier ||= ActiveSupport::MessageVerifier.new(Mailkick.secret_token)
   end
 
   def self.generate_token(subscriber, list)

@@ -7,6 +7,7 @@ module Mailkick
 
       unless Mailkick.secret_token
         Mailkick.secret_token = app.key_generator.generate_key("mailkick")
+        Mailkick.message_verifier = ActiveSupport::MessageVerifier.new(Mailkick.secret_token, serializer: JSON)
 
         # TODO remove in 2.0
         creds =
@@ -19,7 +20,7 @@ module Mailkick
           end
 
         token = creds.respond_to?(:secret_key_base) ? creds.secret_key_base : creds.secret_token
-        Mailkick.message_verifier.rotate(token)
+        Mailkick.message_verifier.rotate(token, serializer: Marshal)
       end
     end
   end

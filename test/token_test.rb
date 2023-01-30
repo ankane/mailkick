@@ -13,7 +13,7 @@ class TokenTest < Minitest::Test
   end
 
   def test_message_verifier_v2
-    message = "BAhbCTBpBkkiCVVzZXIGOgZFRkkiCnNhbGVzBjsAVA==--2e62acf897286c15a8bce3bf71823551a7fb41d6"
+    message = "W251bGwsMSwiVXNlciIsInNhbGVzIl0=--68e6af4bc88e9910a912da36f779c349c4ac661d"
     assert_equal [nil, 1, "User", "sales"], Mailkick.message_verifier.verify(message)
   end
 end
