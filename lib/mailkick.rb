@@ -41,7 +41,7 @@ module Mailkick
 
   def self.secret_token=(token)
     @@secret_token = token
-    @message_verifier = nil
+    @@message_verifier = nil
   end
 
   def self.message_verifier
