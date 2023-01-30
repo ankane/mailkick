@@ -6,7 +6,7 @@ require "minitest/pride"
 
 Combustion.path = "test/internal"
 Combustion.initialize! :active_record, :action_mailer do
-  config.secret_key_base = "0" * 64
+  config.secret_key_base = "0" * 128
 end
 
 ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT) if ENV["VERBOSE"]
