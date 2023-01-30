@@ -5,7 +5,9 @@ require "minitest/autorun"
 require "minitest/pride"
 
 Combustion.path = "test/internal"
-Combustion.initialize! :active_record, :action_mailer
+Combustion.initialize! :active_record, :action_mailer do
+  config.secret_key_base = "0" * 64
+end
 
 ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT) if ENV["VERBOSE"]
 ActionMailer::Base.delivery_method = :test
