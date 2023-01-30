@@ -1,4 +1,4 @@
-## 1.1.0 (unreleased)
+## 1.1.0 (2023-01-29)
 
 - Improved secret token generation
 
