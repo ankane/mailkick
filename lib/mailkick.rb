@@ -45,13 +45,7 @@ module Mailkick
   end
 
   def self.message_verifier
-    @@message_verifier ||= begin
-      # for custom secret token
-      # see lib/mailkick/engine.rb for default
-      verifier = ActiveSupport::MessageVerifier.new(Mailkick.secret_token, serializer: JSON)
-      verifier.rotate(serializer: Marshal)
-      verifier
-    end
+    @@message_verifier ||= ActiveSupport::MessageVerifier.new(Mailkick.secret_token)
   end
 
   def self.generate_token(subscriber, list)
