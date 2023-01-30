@@ -1,4 +1,4 @@
-## 1.1.1 (unreleased)
+## 1.1.1 (2023-01-30)
 
 - Switched to JSON for serialization with non-default `secret_token`
 
