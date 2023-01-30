@@ -6,22 +6,22 @@ require "json"
 require "set"
 
 # modules
-require "mailkick/legacy"
-require "mailkick/model"
-require "mailkick/serializer"
-require "mailkick/service"
-require "mailkick/service/aws_ses"
-require "mailkick/service/mailchimp"
-require "mailkick/service/mailgun"
-require "mailkick/service/mandrill"
-require "mailkick/service/sendgrid"
-require "mailkick/service/sendgrid_v2"
-require "mailkick/service/postmark"
-require "mailkick/url_helper"
-require "mailkick/version"
+require_relative "mailkick/legacy"
+require_relative "mailkick/model"
+require_relative "mailkick/serializer"
+require_relative "mailkick/service"
+require_relative "mailkick/service/aws_ses"
+require_relative "mailkick/service/mailchimp"
+require_relative "mailkick/service/mailgun"
+require_relative "mailkick/service/mandrill"
+require_relative "mailkick/service/sendgrid"
+require_relative "mailkick/service/sendgrid_v2"
+require_relative "mailkick/service/postmark"
+require_relative "mailkick/url_helper"
+require_relative "mailkick/version"
 
 # integrations
-require "mailkick/engine" if defined?(Rails)
+require_relative "mailkick/engine" if defined?(Rails)
 
 module Mailkick
   mattr_accessor :services, :mount, :process_opt_outs_method
