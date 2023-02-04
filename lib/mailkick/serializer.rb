@@ -3,11 +3,11 @@
 module Mailkick
   class Serializer
     def self.dump(value)
-      JSON.dump(value)
+      ActiveSupport::JSON.encode(value)
     end
 
     def self.load(value)
-      JSON.load(value)
+      ActiveSupport::JSON.decode(value)
     rescue JSON::ParserError
       Marshal.load(value)
     end
