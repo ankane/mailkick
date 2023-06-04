@@ -1,3 +1,7 @@
+## 1.2.0 (unreleased)
+
+- Dropped support for Ruby < 3 and Rails < 6.1
+
 ## 1.1.2 (2023-02-07)
 
 - Improved serialization
