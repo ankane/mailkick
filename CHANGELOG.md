@@ -1,3 +1,7 @@
+## 1.2.1 (unreleased)
+
+- Fixed issue with inheritance
+
 ## 1.2.0 (2023-07-02)
 
 - Dropped support for Ruby < 3 and Rails < 6.1

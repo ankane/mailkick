@@ -54,7 +54,7 @@ module Mailkick
     raise ArgumentError, "Missing subscriber" unless subscriber
     raise ArgumentError, "Missing list" unless list.present?
 
-    message_verifier.generate([nil, subscriber.id, subscriber.class.name, list])
+    message_verifier.generate([nil, subscriber.id, subscriber.class.base_class.name, list])
   end
 end
 
