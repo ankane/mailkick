@@ -1,4 +1,4 @@
-## 1.2.1 (unreleased)
+## 1.2.1 (2023-07-24)
 
 - Fixed issue with inheritance
 
