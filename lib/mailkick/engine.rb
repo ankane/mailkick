@@ -13,7 +13,7 @@ module Mailkick
         creds =
           if app.respond_to?(:credentials) && app.credentials.secret_key_base
             app.credentials
-          elsif app.respond_to?(:secrets)
+          elsif app.respond_to?(:secrets) && app.secrets.secret_key_base
             app.secrets
           else
             app.config
