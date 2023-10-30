@@ -1,4 +1,4 @@
-## 1.2.2 (unreleased)
+## 1.2.2 (2023-10-30)
 
 - Fixed error when secret key base set with `SECRET_KEY_BASE_DUMMY`
 
