@@ -20,7 +20,7 @@ module Mailkick
           end
 
         token = creds.respond_to?(:secret_key_base) ? creds.secret_key_base : creds.secret_token
-        Mailkick.message_verifier.rotate(token, serializer: Marshal)
+        Mailkick.message_verifier.rotate(token, serializer: Marshal) if token
       end
     end
   end

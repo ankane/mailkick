@@ -1,3 +1,7 @@
+## 1.2.2 (unreleased)
+
+- Fixed error when secret key base set with `SECRET_KEY_BASE_DUMMY`
+
 ## 1.2.1 (2023-07-24)
 
 - Fixed issue with inheritance
