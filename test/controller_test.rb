@@ -13,6 +13,20 @@ class ControllerTest < ActionDispatch::IntegrationTest
     refute user.subscribed?("sales")
   end
 
+  def test_unsubscribe_headers
+    with_headers do
+      user = User.create!
+      user.subscribe("sales")
+      message = UserMailer.with(user: user).welcome.deliver_now
+      url = message["List-Unsubscribe"].to_s[1..-2]
+
+      post url, params: {"List-Unsubscribe" => "One-Click"}
+      assert_response :success
+      assert_includes "Unsubscribe successful", response.body
+      refute user.subscribed?("sales")
+    end
+  end
+
   def test_bad_signature
     user = User.create!
     message = UserMailer.with(user: user).welcome.deliver_now

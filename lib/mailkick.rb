@@ -24,12 +24,13 @@ require_relative "mailkick/version"
 require_relative "mailkick/engine" if defined?(Rails)
 
 module Mailkick
-  mattr_accessor :services, :mount, :process_opt_outs_method
+  mattr_accessor :services, :mount, :process_opt_outs_method, :headers
   mattr_reader :secret_token
   mattr_writer :message_verifier
   self.services = []
   self.mount = true
   self.process_opt_outs_method = ->(_) { raise "process_opt_outs_method not defined" }
+  self.headers = false
 
   def self.fetch_opt_outs
     services.each(&:fetch_opt_outs)

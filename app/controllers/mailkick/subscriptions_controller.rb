@@ -1,6 +1,7 @@
 module Mailkick
   class SubscriptionsController < ActionController::Base
     protect_from_forgery with: :exception
+    skip_forgery_protection only: [:unsubscribe]
 
     before_action :set_subscription
 
@@ -12,7 +13,13 @@ module Mailkick
 
       Mailkick::Legacy.opt_out(legacy_options) if Mailkick::Legacy.opt_outs?
 
-      redirect_to subscription_path(params[:id])
+      if request.post? && params["List-Unsubscribe"] == "One-Click"
+        # must not redirect according to RFC 8058
+        # could render show action instead
+        render plain: "Unsubscribe successful"
+      else
+        redirect_to subscription_path(params[:id])
+      end
     end
 
     def subscribe

@@ -19,4 +19,10 @@ class Minitest::Test
     Mailkick::Subscription.delete_all
     Mailkick::OptOut.delete_all
   end
+
+  def with_headers
+    Mailkick.stub(:headers, true) do
+      yield
+    end
+  end
 end

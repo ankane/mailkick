@@ -2,7 +2,7 @@
 
 Email subscriptions for Rails
 
-- Add one-click unsubscribe links to your emails
+- Add one-click unsubscribe links and headers to your emails
 - Fetch bounces and spam reports from your email service
 
 :postbox: Check out [Ahoy Email](https://github.com/ankane/ahoy_email) for analytics
@@ -80,6 +80,16 @@ rails generate mailkick:views
 ```
 
 which copies the view into `app/views/mailkick`.
+
+## Unsubscribe Headers [unreleased]
+
+For one-click unsubscribe headers ([RFC 8058](https://datatracker.ietf.org/doc/html/rfc8058)), create `config/initializers/mailkick.rb` with:
+
+```ruby
+Mailkick.headers = true
+```
+
+Headers will automatically be added to emails that call `mailkick_unsubscribe_url`.
 
 ## Bounces and Spam Reports
 
