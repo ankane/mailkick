@@ -1,4 +1,4 @@
-## 1.3.0 (unreleased)
+## 1.3.0 (2024-01-18)
 
 - Added support for one-click unsubscribe headers (RFC 8058)
 

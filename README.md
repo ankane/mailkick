@@ -81,7 +81,7 @@ rails generate mailkick:views
 
 which copies the view into `app/views/mailkick`.
 
-## Unsubscribe Headers [unreleased]
+## Unsubscribe Headers
 
 For one-click unsubscribe headers ([RFC 8058](https://datatracker.ietf.org/doc/html/rfc8058)), create `config/initializers/mailkick.rb` with:
 
