@@ -7,7 +7,7 @@ Email subscriptions for Rails
 
 :postbox: Check out [Ahoy Email](https://github.com/ankane/ahoy_email) for analytics
 
-[![Build Status](https://github.com/ankane/mailkick/workflows/build/badge.svg?branch=master)](https://github.com/ankane/mailkick/actions)
+[![Build Status](https://github.com/ankane/mailkick/actions/workflows/build.yml/badge.svg)](https://github.com/ankane/mailkick/actions)
 
 ## Installation
 
