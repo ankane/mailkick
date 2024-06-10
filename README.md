@@ -209,68 +209,6 @@ Access the subscription model directly
 Mailkick::Subscription.all
 ```
 
-## Upgrading
-
-### 1.0
-
-Mailkick 1.0 stores subscriptions instead of opt-outs. To migrate:
-
-1. Add a table to store subscriptions
-
-```sh
-rails generate mailkick:install
-rails db:migrate
-```
-
-2. Change the following methods in your code:
-
-- `mailkick_user` to `has_subscriptions`
-- `User.not_opted_out` to `User.subscribed(list)`
-- `opt_in` to `subscribe(list)`
-- `opt_out` to `unsubscribe(list)`
-- `opted_out?` to `!subscribed?(list)`
-
-3. Add a user and list to `mailkick_unsubscribe_url`
-
-```ruby
-mailkick_unsubscribe_url(user, list)
-```
-
-4. Migrate data for each of your lists
-
-```ruby
-opted_out_emails = Mailkick::Legacy.opted_out_emails(list: nil)
-opted_out_users = Mailkick::Legacy.opted_out_users(list: nil)
-
-User.find_in_batches do |users|
-  users.reject! { |u| opted_out_emails.include?(u.email) }
-  users.reject! { |u| opted_out_users.include?(u) }
-
-  now = Time.now
-  records =
-    users.map do |user|
-      {
-        subscriber_type: user.class.name,
-        subscriber_id: user.id,
-        list: "sales",
-        created_at: now,
-        updated_at: now
-      }
-    end
-
-  # use create! for Active Record < 6
-  Mailkick::Subscription.insert_all!(records)
-end
-```
-
-5. Drop the `mailkick_opt_outs` table
-
-```ruby
-drop_table :mailkick_opt_outs
-```
-
-Also, if you use `Mailkick.fetch_opt_outs`, [add a method](#bounces-and-spam-reports) to handle opt outs.
-
 ## History
 
 View the [changelog](https://github.com/ankane/mailkick/blob/master/CHANGELOG.md)
