@@ -6,7 +6,7 @@ module Mailkick
       REASONS_MAP = {
         "SpamNotification" => "spam",
         "SpamComplaint" => "spam",
-        "Unsubscribe" => "unsubscribe",
+        "Unsubscribe" => "unsubscribe"
       }
 
       def initialize(options = {})
