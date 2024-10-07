@@ -3,7 +3,7 @@ module Mailkick
     # checks for table as long as it exists
     def self.opt_outs?
       unless defined?(@opt_outs) && @opt_outs == false
-        @opt_outs = ActiveRecord::Base.connection.table_exists?("mailkick_opt_outs")
+        @opt_outs = ActiveRecord::Base.connection_pool.with_connection { |c| c.table_exists?("mailkick_opt_outs") }
       end
       @opt_outs
     end
