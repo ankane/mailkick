@@ -1,12 +1,22 @@
 # https://github.com/wildbit/postmark-gem
+# For bounce types documentation, see: https://postmarkapp.com/developer/api/bounce-api#bounce-types
 
 module Mailkick
   class Service
     class Postmark < Mailkick::Service
       REASONS_MAP = {
+        # Explicit user actions
         "SpamNotification" => "spam",
         "SpamComplaint" => "spam",
-        "Unsubscribe" => "unsubscribe"
+        "Unsubscribe" => "unsubscribe",
+        "ManuallyDeactivated" => "unsubscribe",
+
+        # Permanent delivery failures
+        "HardBounce" => "bounce",      # Server unable to deliver (unknown user, mailbox not found)
+        "BadEmailAddress" => "bounce", # Invalid email address
+        "Blocked" => "bounce",         # ISP block due to content/blacklisting
+        "DMARCPolicy" => "bounce",     # Rejected due to DMARC Policy - usually permanent
+        "AddressChange" => "bounce"    # User has requested an address change
       }
 
       def initialize(options = {})
@@ -29,12 +39,20 @@ module Mailkick
 
       def fetch(response)
         response.map do |record|
+          next unless should_opt_out?(record[:type])
+
           {
             email: record[:email],
             time: ActiveSupport::TimeZone["UTC"].parse(record[:bounced_at]),
-            reason: REASONS_MAP.fetch(record[:type], "bounce")
+            reason: REASONS_MAP[record[:type]]
           }
-        end
+        end.compact
+      end
+
+      private
+
+      def should_opt_out?(bounce_type)
+        REASONS_MAP.key?(bounce_type)
       end
     end
   end
