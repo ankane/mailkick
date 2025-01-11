@@ -18,7 +18,7 @@ module Mailkick
       end
 
       def bounces
-        fetch(@client.bounces)
+        fetch(@client.bounces(inactive: true))
       end
 
       def self.discoverable?
