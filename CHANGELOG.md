@@ -1,3 +1,7 @@
+## 1.4.0 (unreleased)
+
+- Dropped support for Ruby < 3.2 and Rails < 7.1
+
 ## 1.3.1 (2024-09-09)
 
 - Fixed deprecation warning with Rails 7.1

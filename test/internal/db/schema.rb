@@ -1,8 +1,3 @@
-# must go here to take effect before schema loaded
-if ActiveRecord::VERSION::MAJOR < 6 && ActiveRecord::ConnectionAdapters::SQLite3Adapter.respond_to?(:represent_boolean_as_integer=)
-  ActiveRecord::ConnectionAdapters::SQLite3Adapter.represent_boolean_as_integer = true
-end
-
 ActiveRecord::Schema.define do
   create_table :mailkick_subscriptions do |t|
     t.references :subscriber, polymorphic: true, index: false
