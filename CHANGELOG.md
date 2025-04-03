@@ -1,4 +1,4 @@
-## 1.4.0 (unreleased)
+## 1.4.0 (2025-04-03)
 
 - Dropped support for Ruby < 3.2 and Rails < 7.1
 
