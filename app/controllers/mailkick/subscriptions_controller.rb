@@ -11,8 +11,6 @@ module Mailkick
     def unsubscribe
       subscription.delete_all
 
-      Mailkick::Legacy.opt_out(legacy_options) if Mailkick::Legacy.opt_outs?
-
       if request.post? && params["List-Unsubscribe"] == "One-Click"
         # must not redirect according to RFC 8058
         # could render show action instead
@@ -24,8 +22,6 @@ module Mailkick
 
     def subscribe
       subscription.first_or_create!
-
-      Mailkick::Legacy.opt_in(legacy_options) if Mailkick::Legacy.opt_outs?
 
       redirect_to subscription_path(params[:id])
     end
@@ -65,17 +61,5 @@ module Mailkick
       unsubscribe_subscription_path(params[:id])
     end
     helper_method :unsubscribe_url
-
-    def legacy_options
-      if @subscriber_type
-        # on the unprobabilistic chance subscriber_type is compromised, not much damage
-        user = @subscriber_type.constantize.find(@subscriber_id)
-      end
-      {
-        email: @email,
-        user: user,
-        list: @list
-      }
-    end
   end
 end

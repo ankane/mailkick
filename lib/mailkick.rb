@@ -6,7 +6,6 @@ require "json"
 require "set"
 
 # modules
-require_relative "mailkick/legacy"
 require_relative "mailkick/model"
 require_relative "mailkick/serializer"
 require_relative "mailkick/service"
