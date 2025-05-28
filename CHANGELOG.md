@@ -1,6 +1,7 @@
 ## 2.0.0 (unreleased)
 
 - Dropped support for legacy opt-outs
+- Dropped support for legacy secret token generation and serialization
 
 ## 1.4.0 (2025-04-03)
 

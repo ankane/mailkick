@@ -7,7 +7,6 @@ require "set"
 
 # modules
 require_relative "mailkick/model"
-require_relative "mailkick/serializer"
 require_relative "mailkick/service"
 require_relative "mailkick/service/aws_ses"
 require_relative "mailkick/service/mailchimp"
@@ -47,7 +46,7 @@ module Mailkick
   end
 
   def self.message_verifier
-    @@message_verifier ||= ActiveSupport::MessageVerifier.new(Mailkick.secret_token, serializer: Serializer)
+    @@message_verifier ||= ActiveSupport::MessageVerifier.new(Mailkick.secret_token, serializer: JSON)
   end
 
   def self.generate_token(subscriber, list)
