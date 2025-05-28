@@ -168,7 +168,7 @@ Add the gem
 gem "mandrill-api"
 ```
 
-And set `ENV["MANDRILL_APIKEY"]`.
+And set `ENV["MANDRILL_API_KEY"]`.
 
 #### Postmark
 
