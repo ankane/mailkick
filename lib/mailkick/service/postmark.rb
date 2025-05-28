@@ -1,4 +1,4 @@
-# https://github.com/wildbit/postmark-gem
+# https://github.com/ActiveCampaign/postmark-gem
 
 module Mailkick
   class Service
