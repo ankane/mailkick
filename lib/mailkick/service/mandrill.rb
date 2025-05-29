@@ -10,10 +10,10 @@ module Mailkick
         "unsub" => "unsubscribe"
       }
 
-      def initialize(options = {})
+      def initialize(api_key: nil)
         require "mandrill"
         @mandrill = ::Mandrill::API.new(
-          options[:api_key] || ENV["MANDRILL_APIKEY"] || ENV["MANDRILL_API_KEY"]
+          api_key || ENV["MANDRILL_APIKEY"] || ENV["MANDRILL_API_KEY"]
         )
       end
 

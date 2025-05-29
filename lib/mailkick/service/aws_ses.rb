@@ -8,8 +8,7 @@ module Mailkick
         "COMPLAINT" => "spam"
       }
 
-      def initialize(options = {})
-        @options = options
+      def initialize
       end
 
       def opt_outs

@@ -9,8 +9,8 @@ module Mailkick
         "Unsubscribe" => "unsubscribe"
       }
 
-      def initialize(options = {})
-        @client = ::Postmark::ApiClient.new(options[:api_key] || ENV["POSTMARK_API_KEY"])
+      def initialize(api_key: nil)
+        @client = ::Postmark::ApiClient.new(api_key || ENV["POSTMARK_API_KEY"])
       end
 
       def opt_outs

@@ -3,10 +3,10 @@
 module Mailkick
   class Service
     class Mailgun < Mailkick::Service
-      def initialize(options = {})
+      def initialize(api_key: nil, domain: nil)
         require "mailgun"
-        mailgun_client = ::Mailgun::Client.new(options[:api_key] || ENV["MAILGUN_API_KEY"])
-        domain = options[:domain] || ActionMailer::Base.smtp_settings[:domain]
+        mailgun_client = ::Mailgun::Client.new(api_key || ENV["MAILGUN_API_KEY"])
+        domain ||= ActionMailer::Base.smtp_settings[:domain]
         @mailgun_events = ::Mailgun::Events.new(mailgun_client, domain)
       end
 

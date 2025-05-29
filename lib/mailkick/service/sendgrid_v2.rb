@@ -3,8 +3,8 @@
 module Mailkick
   class Service
     class SendGridV2 < Mailkick::Service
-      def initialize(options = {})
-        @api_key = options[:api_key] || ENV["SENDGRID_API_KEY"]
+      def initialize(api_key: nil)
+        @api_key = api_key || ENV["SENDGRID_API_KEY"]
       end
 
       def opt_outs
