@@ -1,5 +1,6 @@
 ## 2.0.0 (unreleased)
 
+- Switched to suppressions API for Postmark
 - Dropped support for legacy opt-outs
 - Dropped support for legacy secret token generation and serialization
 - Dropped support for legacy SendGrid service

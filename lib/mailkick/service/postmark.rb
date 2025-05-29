@@ -4,21 +4,22 @@ module Mailkick
   class Service
     class Postmark < Mailkick::Service
       REASONS_MAP = {
-        "SpamNotification" => "spam",
+        "HardBounce" => "bounce",
         "SpamComplaint" => "spam",
-        "Unsubscribe" => "unsubscribe"
+        "ManualSuppression" => "unsubscribe"
       }
 
-      def initialize(api_key: nil)
+      def initialize(api_key: nil, stream_id: "outbound")
         @client = ::Postmark::ApiClient.new(api_key || ENV["POSTMARK_API_KEY"])
+        @stream_id = stream_id
       end
 
       def opt_outs
-        bounces
+        suppressions
       end
 
-      def bounces
-        fetch(@client.bounces)
+      def suppressions
+        fetch(@client.dump_suppressions(@stream_id))
       end
 
       def self.discoverable?
@@ -30,9 +31,9 @@ module Mailkick
       def fetch(response)
         response.map do |record|
           {
-            email: record[:email],
-            time: ActiveSupport::TimeZone["UTC"].parse(record[:bounced_at]),
-            reason: REASONS_MAP.fetch(record[:type], "bounce")
+            email: record[:email_address],
+            time: ActiveSupport::TimeZone["UTC"].parse(record[:created_at]),
+            reason: REASONS_MAP[record[:suppression_reason]]
           }
         end
       end
