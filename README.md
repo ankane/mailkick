@@ -38,26 +38,43 @@ end
 Subscribe to a list
 
 ```ruby
+user.mailkick_subscribe("sales")
+# or if no conflict with existing methods
 user.subscribe("sales")
 ```
 
 Unsubscribe from a list
 
 ```ruby
+user.mailkick_unsubscribe("sales")
+# or if no conflict with existing methods
 user.unsubscribe("sales")
 ```
 
 Check if subscribed
 
 ```ruby
+user.mailkick_subscribed?("sales")
+# or if no conflict with existing methods
 user.subscribed?("sales")
 ```
 
 Get subscribers for a list (use this for sending emails)
 
 ```ruby
+User.mailkick_subscribed("sales")
+# or if no conflict with existing methods
 User.subscribed("sales")
 ```
+
+### Method Naming
+
+All Mailkick methods are available with the `mailkick_` prefix to avoid conflicts with existing methods in your models. If your model doesn't have methods with the same names, Mailkick will also create shorter aliases for convenience:
+
+- `mailkick_subscribe` → `subscribe`
+- `mailkick_unsubscribe` → `unsubscribe`
+- `mailkick_subscribed?` → `subscribed?`
+- `mailkick_subscriptions` → `subscriptions`
 
 ## Unsubscribe Links
 
