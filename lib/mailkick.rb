@@ -31,12 +31,14 @@ module Mailkick
 
   def self.fetch_opt_outs
     services.each(&:fetch_opt_outs)
+    nil
   end
 
   def self.discover_services
     Service.subclasses.each do |service|
       services << service.new if service.discoverable?
     end
+    nil
   end
 
   def self.secret_token=(token)

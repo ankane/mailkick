@@ -43,7 +43,7 @@ class ServiceTest < Minitest::Test
         end
       end
 
-      Mailkick.fetch_opt_outs
+      assert_nil Mailkick.fetch_opt_outs
 
       refute user.subscribed?("sales")
       assert user2.subscribed?("sales")
