@@ -1,5 +1,7 @@
 ## 2.0.0 (unreleased)
 
+- Added namespaced methods (`mailkick_subscribe`, `mailkick_unsubscribe`, `mailkick_subscribed?`) to avoid conflicts with existing model methods
+- Shorthand aliases (`subscribe`, `unsubscribe`, `subscribed?`) are now only created if no such methods exist
 - Dropped support for legacy opt-outs
 - Dropped support for legacy secret token generation and serialization
 - Dropped support for legacy SendGrid service
