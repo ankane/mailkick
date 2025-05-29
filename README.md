@@ -126,8 +126,6 @@ The following services are supported:
 - [Postmark](#postmark)
 - [SendGrid](#sendgrid)
 
-Will gladly accept pull requests for others.
-
 #### AWS SES
 
 Add the gem
