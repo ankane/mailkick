@@ -2,7 +2,7 @@
 
 module Mailkick
   class Service
-    class SendGridV2 < Mailkick::Service
+    class SendGrid < Mailkick::Service
       def initialize(api_key: nil)
         @api_key = api_key || ENV["SENDGRID_API_KEY"]
       end
@@ -48,5 +48,8 @@ module Mailkick
         end
       end
     end
+
+    # backwards compatibility
+    SendGridV2 = SendGrid
   end
 end
