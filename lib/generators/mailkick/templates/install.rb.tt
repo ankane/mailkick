@@ -1,7 +1,7 @@
 class <%= migration_class_name %> < ActiveRecord::Migration<%= migration_version %>
   def change
-    create_table :mailkick_subscriptions do |t|
-      t.references :subscriber, polymorphic: true, index: false
+    create_table :mailkick_subscriptions<%= primary_key_type %> do |t|
+      t.references :subscriber<%= foreign_key_type %>, polymorphic: true, index: false
       t.string :list
       t.timestamps
     end

@@ -11,4 +11,12 @@ class InstallGeneratorTest < Rails::Generators::TestCase
     run_generator
     assert_migration "db/migrate/create_mailkick_subscriptions.rb", /create_table :mailkick_subscriptions do/
   end
+
+  def test_primary_key_type
+    Rails.configuration.generators.stub(:options, {active_record: {primary_key_type: :uuid}}) do
+      run_generator
+    end
+    assert_migration "db/migrate/create_mailkick_subscriptions.rb", /id: :uuid/
+    assert_migration "db/migrate/create_mailkick_subscriptions.rb", /type: :uuid/
+  end
 end
