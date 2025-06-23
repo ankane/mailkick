@@ -215,6 +215,22 @@ class User < ApplicationRecord
 end
 ```
 
+## Upgrading
+
+### 2.0
+
+Unsubscribe links created before version 1.1.1 will no longer work by default. Determine if this is acceptable for your application (for instance, in the US, links must work [for 30 days](https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business) after the message is sent). To restore support, [determine the previous secret token](https://github.com/ankane/mailkick/blob/v1.4.0/lib/mailkick/engine.rb#L13-L22) and create an initializer with:
+
+```ruby
+Mailkick.message_verifier.rotate(previous_secret_token, serializer: Marshal)
+```
+
+If fetching bounces, spam reports, and unsubscribes from Postmark, the suppressions API is now used and the default stream has been changed to `broadcast`. To use `outbound`, create an initializer with:
+
+```ruby
+Mailkick.services = [Mailkick::Service::Postmark.new(api_key: api_key, stream_id: "outbound")]
+```
+
 ## History
 
 View the [changelog](https://github.com/ankane/mailkick/blob/master/CHANGELOG.md)
