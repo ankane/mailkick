@@ -207,6 +207,14 @@ Access the subscription model directly
 Mailkick::Subscription.all
 ```
 
+Prefix method names with `mailkick_` [unreleased]
+
+```ruby
+class User < ApplicationRecord
+  has_subscriptions prefix: true
+end
+```
+
 ## History
 
 View the [changelog](https://github.com/ankane/mailkick/blob/master/CHANGELOG.md)
