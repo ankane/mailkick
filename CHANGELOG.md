@@ -1,4 +1,6 @@
-## 2.0.0 (unreleased)
+## 2.0.0 (2025-06-23)
+
+See the [upgrade notes](https://github.com/ankane/mailkick?tab=readme-ov-file#20)
 
 - Added `prefix` option to `has_subscriptions`
 - Switched to suppressions API for Postmark and changed default stream to `broadcast`
