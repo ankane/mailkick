@@ -9,8 +9,4 @@ ActiveRecord::Schema.define do
   create_table :users do |t|
     t.string :email
   end
-
-  create_table :admins do |t|
-    t.string :email_address
-  end
 end
