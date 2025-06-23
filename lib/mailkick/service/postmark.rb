@@ -9,7 +9,7 @@ module Mailkick
         "ManualSuppression" => "unsubscribe"
       }
 
-      def initialize(api_key: nil, stream_id: "outbound")
+      def initialize(api_key: nil, stream_id: "broadcast")
         @client = ::Postmark::ApiClient.new(api_key || ENV["POSTMARK_API_KEY"])
         @stream_id = stream_id
       end
