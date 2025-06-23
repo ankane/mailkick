@@ -7,12 +7,12 @@ class ModelTest < Minitest::Test
     refute user.subscribed?("sales")
     assert_equal 0, User.subscribed("sales").count
 
-    user.subscribe("sales")
+    assert_nil user.subscribe("sales")
 
     assert user.subscribed?("sales")
     assert_equal 1, User.subscribed("sales").count
 
-    user.unsubscribe("sales")
+    assert_nil user.unsubscribe("sales")
 
     refute user.subscribed?("sales")
     assert_equal 0, User.subscribed("sales").count
