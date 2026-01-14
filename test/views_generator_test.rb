@@ -9,6 +9,6 @@ class ViewsGeneratorTest < Rails::Generators::TestCase
 
   def test_works
     run_generator
-    assert_file "app/views/mailkick/subscriptions/show.html.erb"
+    assert_file "app/views/mailkick/opt_outs/show.html.erb"
   end
 end

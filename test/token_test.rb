@@ -12,15 +12,48 @@ class TokenTest < Minitest::Test
     assert_equal OpenSSL::Digest::SHA256, Rails.application.key_generator.instance_variable_get(:@key_generator).instance_variable_get(:@hash_digest_class)
   end
 
-  def test_message_verifier
-    message = "W251bGwsMSwiVXNlciIsInNhbGVzIl0=--68e6af4bc88e9910a912da36f779c349c4ac661d"
-    assert_equal [nil, 1, "User", "sales"], Mailkick.message_verifier.verify(message)
+  def test_generate_and_verify_token
+    email = "test@example.org"
+    company_id = 123
+    list = "marketing"
+
+    token = Mailkick.generate_token(email, company_id, list)
+
+    # Verify the token decodes correctly
+    decoded = Mailkick.verify_token(token)
+    assert_equal [email, company_id, list], decoded
   end
 
-  def test_custom_token
+  def test_token_email_normalization
+    # Emails should be normalized in tokens
+    token = Mailkick.generate_token("  TEST@Example.ORG  ", 123, "marketing")
+    decoded = Mailkick.verify_token(token)
+    assert_equal "test@example.org", decoded[0]
+  end
+
+  def test_custom_secret_token
     with_secret_token("1" * 128) do
-      message = "W251bGwsMSwiVXNlciIsInNhbGVzIl0=--fb88c71ff1d08d86ffd05b19674c162588aad283"
-      assert_equal [nil, 1, "User", "sales"], Mailkick.message_verifier.verify(message)
+      email = "test@example.org"
+      company_id = 1
+      list = "sales"
+
+      token = Mailkick.generate_token(email, company_id, list)
+      decoded = Mailkick.verify_token(token)
+      assert_equal [email, company_id, list], decoded
+    end
+  end
+
+  def test_token_validation
+    assert_raises(ArgumentError) { Mailkick.generate_token(nil, 123, "marketing") }
+    assert_raises(ArgumentError) { Mailkick.generate_token("", 123, "marketing") }
+    assert_raises(ArgumentError) { Mailkick.generate_token("test@example.org", nil, "marketing") }
+    assert_raises(ArgumentError) { Mailkick.generate_token("test@example.org", 123, nil) }
+    assert_raises(ArgumentError) { Mailkick.generate_token("test@example.org", 123, "") }
+  end
+
+  def test_invalid_token_verification
+    assert_raises(ActiveSupport::MessageVerifier::InvalidSignature) do
+      Mailkick.verify_token("invalid-token")
     end
   end
 

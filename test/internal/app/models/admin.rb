@@ -1,3 +1,3 @@
 class Admin < ActiveRecord::Base
-  has_subscriptions prefix: true
+  has_email_opt_outs email_field: :email
 end

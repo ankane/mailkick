@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 end
 
 Mailkick::Engine.routes.draw do
-  resources :subscriptions, only: [:show] do
+  resources :opt_outs, only: [:show] do
     match :unsubscribe, on: :member, via: [:get, :post]
     get :subscribe, on: :member
   end

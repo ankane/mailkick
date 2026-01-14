@@ -1,11 +1,11 @@
 # Mailkick
 
-Email subscriptions for Rails
+Multi-tenant email opt-out management for Rails
 
+- Track email opt-outs scoped by email address and company
 - Add one-click unsubscribe links and headers to your emails
-- Fetch bounces and spam reports from your email service
-
-**Mailkick 2.0 was recently released** - see [how to upgrade](#upgrading)
+- CAN-SPAM compliant unsubscribe mechanism
+- Support for multiple mailing lists (e.g., marketing, transactional)
 
 :postbox: Check out [Ahoy Email](https://github.com/ankane/ahoy_email) for analytics
 
@@ -13,13 +13,13 @@ Email subscriptions for Rails
 
 ## Installation
 
-Add this line to your application’s Gemfile:
+Add this line to your application's Gemfile:
 
 ```ruby
 gem "mailkick"
 ```
 
-And run the generator. This creates a table to store subscriptions.
+And run the generator. This creates a table to store opt-outs.
 
 ```sh
 bundle install
@@ -29,36 +29,52 @@ rails db:migrate
 
 ## Getting Started
 
-Add `has_subscriptions` to your user model:
+### Opt-out Tracking
+
+Mailkick uses an **opt-out model** - users are subscribed by default and only tracked when they opt out. This is ideal for CAN-SPAM compliance.
+
+Check if an email has opted out:
 
 ```ruby
-class User < ApplicationRecord
-  has_subscriptions
-end
+Mailkick.opted_out?(email: "user@example.com", company_id: 123, list: "marketing")
 ```
 
-Subscribe to a list
+Record an opt-out:
 
 ```ruby
-user.subscribe("sales")
+Mailkick.opt_out(email: "user@example.com", company_id: 123, list: "marketing")
 ```
 
-Unsubscribe from a list
+Remove an opt-out (re-subscribe):
 
 ```ruby
-user.unsubscribe("sales")
+Mailkick.opt_in(email: "user@example.com", company_id: 123, list: "marketing")
 ```
 
-Check if subscribed
+### Multi-tenant Scoping
+
+Opt-outs are scoped by **company_id**, ensuring that opting out from Company A's emails doesn't affect Company B's emails.
 
 ```ruby
-user.subscribed?("sales")
+# User opts out from Company A's marketing emails
+Mailkick.opt_out(email: "user@example.com", company_id: company_a.id, list: "marketing")
+
+# Still subscribed to Company B's marketing emails
+Mailkick.opted_out?(email: "user@example.com", company_id: company_b.id, list: "marketing")
+# => false
 ```
 
-Get subscribers for a list (use this for sending emails)
+### Mailing Lists
+
+You can scope opt-outs by list type (default is "marketing"):
 
 ```ruby
-User.subscribed("sales")
+# Opt out of marketing emails
+Mailkick.opt_out(email: "user@example.com", company_id: 123, list: "marketing")
+
+# Still subscribed to transactional emails
+Mailkick.opted_out?(email: "user@example.com", company_id: 123, list: "transactional")
+# => false
 ```
 
 ## Unsubscribe Links
@@ -66,16 +82,18 @@ User.subscribed("sales")
 Add an unsubscribe link to your emails. For HTML emails, use:
 
 ```erb
-<%= link_to "Unsubscribe", mailkick_unsubscribe_url(@user, "sales") %>
+<%= link_to "Unsubscribe", mailkick_unsubscribe_url(@recipient_email, @company_id, "marketing") %>
 ```
 
 For text emails, use:
 
 ```erb
-Unsubscribe: <%= mailkick_unsubscribe_url(@user, "sales") %>
+Unsubscribe: <%= mailkick_unsubscribe_url(@recipient_email, @company_id, "marketing") %>
 ```
 
-When a user unsubscribes, they are taken to a mobile-friendly page and given the option to resubscribe. To customize the view, run:
+When a user clicks the link, they are taken to a mobile-friendly page showing their current subscription status and the option to unsubscribe or resubscribe.
+
+To customize the view, run:
 
 ```sh
 rails generate mailkick:views
@@ -93,21 +111,90 @@ Mailkick.headers = true
 
 Headers will automatically be added to emails that call `mailkick_unsubscribe_url`.
 
+## Model Convenience Methods (Optional)
+
+You can add convenience methods to your models:
+
+```ruby
+class User < ApplicationRecord
+  has_email_opt_outs email_field: :email
+end
+```
+
+Then use:
+
+```ruby
+user.opted_out_of?(company_id: 123, list: "marketing")
+user.opt_out_of(company_id: 123, list: "marketing")
+user.opt_in_to(company_id: 123, list: "marketing")
+```
+
+## Querying Opt-outs
+
+Get all opt-outs for a company:
+
+```ruby
+Mailkick.opt_outs_for_company(company_id: 123)
+Mailkick.opt_outs_for_company(company_id: 123, list: "marketing")
+```
+
+Get all opt-outs for an email across all companies:
+
+```ruby
+Mailkick.opt_outs_for_email(email: "user@example.com")
+```
+
+Access the opt-out model directly:
+
+```ruby
+Mailkick::OptOut.all
+Mailkick::OptOut.for_email("user@example.com")
+Mailkick::OptOut.for_company(123)
+Mailkick::OptOut.for_list("marketing")
+```
+
+## Checking Opt-outs Before Sending
+
+Create a mail interceptor to check opt-outs before sending marketing emails:
+
+```ruby
+# config/initializers/mail_interceptors.rb
+class CheckOptOuts
+  def self.delivering_email(message)
+    # Only check marketing emails
+    return unless message[:X-Email-Category]&.value == "marketing"
+
+    company_id = message[:X-Company-Id]&.value&.to_i
+    return unless company_id
+
+    message.to.each do |email|
+      if Mailkick.opted_out?(email: email, company_id: company_id, list: "marketing")
+        message.perform_deliveries = false
+        Rails.logger.info "Blocked email to #{email} - opted out"
+        break
+      end
+    end
+  end
+end
+
+ActionMailer::Base.register_interceptor(CheckOptOuts)
+```
+
 ## Bounces and Spam Reports
 
 Fetch bounces, spam reports, and unsubscribes from your email service. Create `config/initializers/mailkick.rb` with a method to handle opt outs.
 
 ```ruby
 Mailkick.process_opt_outs_method = lambda do |opt_outs|
-  emails = opt_outs.map { |v| v[:email] }
-  subscribers = User.includes(:mailkick_subscriptions).where(email: emails).index_by(&:email)
-
   opt_outs.each do |opt_out|
-    subscriber = subscribers[opt_out[:email]]
-    next unless subscriber
-
-    subscriber.mailkick_subscriptions.each do |subscription|
-      subscription.destroy if subscription.created_at < opt_out[:time]
+    # Opt out the email from all companies for marketing emails
+    # Customize this based on your needs
+    Company.find_each do |company|
+      Mailkick.opt_out(
+        email: opt_out[:email],
+        company_id: company.id,
+        list: "marketing"
+      )
     end
   end
 end
@@ -201,36 +288,20 @@ Mailkick.services = [
 ]
 ```
 
-## Reference
+## Token Generation
 
-Access the subscription model directly
+Mailkick uses secure tokens for unsubscribe URLs. Tokens encode the email, company_id, and list, and are verified using Rails' MessageVerifier.
+
+Generate a token manually:
 
 ```ruby
-Mailkick::Subscription.all
+token = Mailkick.generate_token("user@example.com", 123, "marketing")
 ```
 
-Prefix method names with `mailkick_`
+Verify a token:
 
 ```ruby
-class User < ApplicationRecord
-  has_subscriptions prefix: true
-end
-```
-
-## Upgrading
-
-### 2.0
-
-Unsubscribe links created before version 1.1.1 (released January 2023) will no longer work by default. Determine if this is acceptable for your application (for instance, in the US, links must work [for 30 days](https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business) after the message is sent). To restore support, [determine the previous secret token](https://github.com/ankane/mailkick/blob/v1.4.0/lib/mailkick/engine.rb#L13-L22) and create an initializer with:
-
-```ruby
-Mailkick.message_verifier.rotate(previous_secret_token, serializer: Marshal)
-```
-
-If fetching bounces, spam reports, and unsubscribes from Postmark, the suppressions API is now used and the default stream has been changed to `broadcast`. To use `outbound`, create an initializer with:
-
-```ruby
-Mailkick.services = [Mailkick::Service::Postmark.new(api_key: api_key, stream_id: "outbound")]
+email, company_id, list = Mailkick.verify_token(token)
 ```
 
 ## History

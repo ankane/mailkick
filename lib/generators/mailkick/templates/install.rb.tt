@@ -1,11 +1,14 @@
 class <%= migration_class_name %> < ActiveRecord::Migration<%= migration_version %>
   def change
-    create_table :mailkick_subscriptions<%= primary_key_type %> do |t|
-      t.references :subscriber<%= foreign_key_type %>, polymorphic: true, index: false
-      t.string :list
+    create_table :mailkick_opt_outs<%= primary_key_type %> do |t|
+      t.string :email, null: false
+      t.bigint :company_id, null: false
+      t.string :list, null: false, default: "marketing"
       t.timestamps
     end
 
-    add_index :mailkick_subscriptions, [:subscriber_type, :subscriber_id, :list], unique: true, name: "index_mailkick_subscriptions_on_subscriber_and_list"
+    add_index :mailkick_opt_outs, [:email, :company_id, :list], unique: true, name: "index_mailkick_opt_outs_on_email_company_and_list"
+    add_index :mailkick_opt_outs, :company_id
+    add_index :mailkick_opt_outs, :email
   end
 end

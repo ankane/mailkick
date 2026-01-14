@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Email Preferences</title>
+
+    <style>
+      body {
+        padding: 20px;
+        font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        line-height: 1.4;
+        background-color: #f5f5f5;
+      }
+
+      a {
+        color: #0066cc;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .container {
+        max-width: 500px;
+        margin: 40px auto;
+        padding: 30px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        margin-top: 0;
+        font-size: 24px;
+        color: #333;
+      }
+
+      .status {
+        padding: 15px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+      }
+
+      .status.opted-out {
+        background-color: #fff3cd;
+        border: 1px solid #ffc107;
+      }
+
+      .status.subscribed {
+        background-color: #d4edda;
+        border: 1px solid #28a745;
+      }
+
+      .email-display {
+        font-weight: bold;
+        color: #333;
+      }
+
+      .action-link {
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-weight: 500;
+      }
+
+      .action-link.subscribe {
+        background-color: #28a745;
+        color: white;
+      }
+
+      .action-link.unsubscribe {
+        background-color: #dc3545;
+        color: white;
+      }
+
+      .action-link:hover {
+        text-decoration: none;
+        opacity: 0.9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Email Preferences</h1>
+
+      <p>Managing preferences for: <span class="email-display"><%= email %></span></p>
+
+      <% if opted_out? %>
+        <div class="status opted-out">
+          <p>You have unsubscribed from <%= list %> emails.</p>
+        </div>
+        <p><%= link_to "Resubscribe", subscribe_url, class: "action-link subscribe" %></p>
+      <% else %>
+        <div class="status subscribed">
+          <p>You are currently subscribed to <%= list %> emails.</p>
+        </div>
+        <p><%= link_to "Unsubscribe", unsubscribe_url, class: "action-link unsubscribe" %></p>
+      <% end %>
+    </div>
+  </body>
+</html>

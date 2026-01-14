@@ -21,32 +21,31 @@ class ServiceTest < Minitest::Test
   end
 
   def test_process_opt_outs
-    user = User.create!(email: "test@example.com")
-    user.subscribe("sales")
-
-    user2 = User.create!(email: "test2@example.com")
-    user2.subscribe("sales")
+    company = Company.create!(name: "Test Company")
 
     previous_method = Mailkick.process_opt_outs_method
     begin
+      # Example of how process_opt_outs_method can be used to auto-opt-out
+      # users who bounce or report spam
       Mailkick.process_opt_outs_method = lambda do |opt_outs|
-        emails = opt_outs.map { |v| v[:email] }
-        subscribers = User.includes(:mailkick_subscriptions).where(email: emails).index_by(&:email)
-
         opt_outs.each do |opt_out|
-          subscriber = subscribers[opt_out[:email]]
-          next unless subscriber
-
-          subscriber.mailkick_subscriptions.each do |subscription|
-            subscription.destroy if subscription.created_at < opt_out[:time]
+          # Opt out the email from all companies for marketing emails
+          # This is just an example - you might want different behavior
+          Company.find_each do |company|
+            Mailkick.opt_out(
+              email: opt_out[:email],
+              company_id: company.id,
+              list: "marketing"
+            )
           end
         end
       end
 
       assert_nil Mailkick.fetch_opt_outs
 
-      refute user.subscribed?("sales")
-      assert user2.subscribed?("sales")
+      # Both emails should now be opted out
+      assert Mailkick.opted_out?(email: "test@example.com", company_id: company.id, list: "marketing")
+      assert Mailkick.opted_out?(email: "test2@example.com", company_id: company.id, list: "marketing")
     ensure
       Mailkick.process_opt_outs_method = previous_method
     end
