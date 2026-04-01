@@ -1,6 +1,7 @@
 ## 2.1.0 (unreleased)
 
 - Fixed change to key generator hash digest class
+- Dropped support for Ruby < 3.3 and Rails < 7.2
 
 ## 2.0.0 (2025-06-23)
 
