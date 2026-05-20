@@ -9,7 +9,7 @@ class ControllerTest < ActionDispatch::IntegrationTest
     url = /Unsubscribe: (.+)/.match(text_body)[1]
 
     get url
-    assert_response :redirect
+    assert_redirected_to url.delete_suffix("/unsubscribe")
     refute user.subscribed?("sales")
   end
 
