@@ -66,7 +66,7 @@ module Mailkick
     end
     helper_method :subscribe_url
 
-    # add confirmed parameter for custom views that use GET
+    # confirmed parameter for custom views created before 3.0
     def unsubscribe_url
       unsubscribe_subscription_path(params[:id], {confirmed: true})
     end
