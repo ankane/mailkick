@@ -1,5 +1,6 @@
 ## 2.1.0 (unreleased)
 
+- Improved CSP support
 - Fixed change to key generator hash digest class
 - Dropped support for Ruby < 3.3 and Rails < 7.2
 

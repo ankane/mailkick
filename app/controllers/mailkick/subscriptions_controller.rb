@@ -61,5 +61,12 @@ module Mailkick
       unsubscribe_subscription_path(params[:id])
     end
     helper_method :unsubscribe_url
+
+    def style_nonce
+      if request.content_security_policy_nonce_directives&.include?("style-src")
+        content_security_policy_nonce
+      end
+    end
+    helper_method :style_nonce
   end
 end

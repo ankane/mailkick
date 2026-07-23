@@ -3,7 +3,7 @@
   <head>
     <title>Subscriptions</title>
 
-    <style>
+    <%= content_tag :style, nonce: style_nonce do %>
       body {
         padding: 20px;
         font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
@@ -20,7 +20,7 @@
         margin-left: auto;
         margin-right: auto;
       }
-    </style>
+    <% end %>
   </head>
   <body>
     <div class="container">
