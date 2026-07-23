@@ -7,6 +7,7 @@ end
 Mailkick::Engine.routes.draw do
   resources :subscriptions, only: [:show] do
     match :unsubscribe, on: :member, via: [:get, :post]
+    # support GET for custom views created before 3.0
     match :subscribe, on: :member, via: [:get, :post]
   end
 end
