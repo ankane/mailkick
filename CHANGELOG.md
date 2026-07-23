@@ -1,6 +1,7 @@
-## 2.1.0 (unreleased)
+## 3.0.0 (unreleased)
 
 - Improved CSP support
+- Enabled `headers` by default
 - Fixed change to key generator hash digest class
 - Dropped support for Ruby < 3.3 and Rails < 7.2
 

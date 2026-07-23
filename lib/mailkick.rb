@@ -27,7 +27,7 @@ module Mailkick
   self.services = []
   self.mount = true
   self.process_opt_outs_method = ->(_) { raise "process_opt_outs_method not defined" }
-  self.headers = false
+  self.headers = true
 
   def self.fetch_opt_outs
     services.each(&:fetch_opt_outs)

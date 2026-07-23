@@ -18,10 +18,10 @@ class Minitest::Test
     Mailkick::Subscription.delete_all
   end
 
-  def with_headers
+  def with_headers(value = true)
     previous_value = Mailkick.headers
     begin
-      Mailkick.headers = true
+      Mailkick.headers = value
       yield
     ensure
       Mailkick.headers = previous_value
