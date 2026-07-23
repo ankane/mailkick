@@ -9,14 +9,16 @@ module Mailkick
     end
 
     def unsubscribe
-      subscription.delete_all
+      defer = request.get? && !params[:confirmed]
+
+      subscription.delete_all unless defer
 
       if request.post? && params["List-Unsubscribe"] == "One-Click"
         # must not redirect according to RFC 8058
         # could render show action instead
         render plain: "Unsubscribe successful"
       else
-        redirect_to subscription_path(params[:id])
+        redirect_to subscription_path(params[:id], defer ? {unsubscribe: true} : {})
       end
     end
 
@@ -52,13 +54,19 @@ module Mailkick
     end
     helper_method :opted_out?
 
+    def unsubscribing?
+      !!params[:unsubscribe]
+    end
+    helper_method :unsubscribing?
+
     def subscribe_url
       subscribe_subscription_path(params[:id])
     end
     helper_method :subscribe_url
 
+    # add confirmed parameter for custom views that use GET
     def unsubscribe_url
-      unsubscribe_subscription_path(params[:id])
+      unsubscribe_subscription_path(params[:id], {confirmed: true})
     end
     helper_method :unsubscribe_url
 
