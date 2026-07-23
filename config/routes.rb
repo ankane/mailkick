@@ -7,6 +7,6 @@ end
 Mailkick::Engine.routes.draw do
   resources :subscriptions, only: [:show] do
     match :unsubscribe, on: :member, via: [:get, :post]
-    get :subscribe, on: :member
+    match :subscribe, on: :member, via: [:get, :post]
   end
 end
