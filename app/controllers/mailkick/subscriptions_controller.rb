@@ -66,7 +66,8 @@ module Mailkick
     end
     helper_method :subscribe_url
 
-    # confirmed parameter for custom views created before 3.0
+    # custom views created before 3.0 will use GET instead of POST
+    # so add confirmed parameter to ensure unsubscribed
     def unsubscribe_url
       unsubscribe_subscription_path(params[:id], {confirmed: true})
     end
