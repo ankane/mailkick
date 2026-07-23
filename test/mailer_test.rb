@@ -2,33 +2,34 @@ require_relative "test_helper"
 
 class MailerTest < Minitest::Test
   def test_unsubscribe_url
-    with_headers(false) do
-      user = User.create!
-      message = UserMailer.with(user: user).welcome.deliver_now
-      html_body = message.html_part.body.to_s
-      assert_includes html_body, "unsubscribe"
-      text_body = message.text_part.body.to_s
-      assert_includes text_body, "unsubscribe"
-      assert_nil message["List-Unsubscribe-Post"]
-      assert_nil message["List-Unsubscribe"]
-    end
+    user = User.create!
+    message = UserMailer.with(user: user).welcome.deliver_now
+    html_body = message.html_part.body.to_s
+    assert_includes html_body, "unsubscribe"
+    text_body = message.text_part.body.to_s
+    assert_includes text_body, "unsubscribe"
   end
 
   def test_headers
-    with_headers do
-      user = User.create!
-      message = UserMailer.with(user: user).welcome.deliver_now
-      assert_equal "List-Unsubscribe=One-Click", message["List-Unsubscribe-Post"].to_s
-      assert_includes message["List-Unsubscribe"].to_s, "unsubscribe"
-    end
+    user = User.create!
+    message = UserMailer.with(user: user).welcome.deliver_now
+    assert_equal "List-Unsubscribe=One-Click", message["List-Unsubscribe-Post"].to_s
+    assert_includes message["List-Unsubscribe"].to_s, "unsubscribe"
   end
 
   def test_existing_header
-    with_headers do
+    user = User.create!
+    message = UserMailer.with(user: user, header: true).welcome.deliver_now
+    assert_nil message["List-Unsubscribe-Post"]
+    assert_equal message["List-Unsubscribe"].to_s, "custom"
+  end
+
+  def test_headers_false
+    with_headers(false) do
       user = User.create!
-      message = UserMailer.with(user: user, header: true).welcome.deliver_now
+      message = UserMailer.with(user: user).welcome.deliver_now
       assert_nil message["List-Unsubscribe-Post"]
-      assert_equal message["List-Unsubscribe"].to_s, "custom"
+      assert_nil message["List-Unsubscribe"]
     end
   end
 end
