@@ -9,6 +9,8 @@ class ControllerTest < ActionDispatch::IntegrationTest
     url = /Unsubscribe: (.+)/.match(text_body)[1]
 
     get url
+    assert user.subscribed?("sales")
+
     action = /action="([^"]+)"/.match(response.body)[1]
     post action
     refute user.subscribed?("sales")
