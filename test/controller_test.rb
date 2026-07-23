@@ -9,10 +9,8 @@ class ControllerTest < ActionDispatch::IntegrationTest
     url = /Unsubscribe: (.+)/.match(text_body)[1]
 
     get url
-    assert_redirected_to "#{url.delete_suffix("/unsubscribe")}?unsubscribe=true"
-    follow_redirect!
-    url = /action="([^"]+)"/.match(response.body)[1]
-    post url
+    action = /action="([^"]+)"/.match(response.body)[1]
+    post action
     refute user.subscribed?("sales")
   end
 

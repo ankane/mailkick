@@ -17,8 +17,10 @@ module Mailkick
         # must not redirect according to RFC 8058
         # could render show action instead
         render plain: "Unsubscribe successful"
+      elsif defer
+        render :show
       else
-        redirect_to subscription_path(params[:id], defer ? {unsubscribe: true} : {})
+        redirect_to subscription_path(params[:id])
       end
     end
 
@@ -55,7 +57,7 @@ module Mailkick
     helper_method :opted_out?
 
     def unsubscribing?
-      !!params[:unsubscribe]
+      action_name == "unsubscribe"
     end
     helper_method :unsubscribing?
 
