@@ -9,7 +9,7 @@ module Mailkick
     end
 
     def unsubscribe
-      defer = request.get? && !params[:confirmed]
+      defer = Mailkick.confirm_unsubscribe && request.get? && !params[:confirmed]
 
       subscription.delete_all unless defer
 

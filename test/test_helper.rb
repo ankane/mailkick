@@ -27,4 +27,14 @@ class Minitest::Test
       Mailkick.headers = previous_value
     end
   end
+
+  def with_confirm_unsubscribe(value = true)
+    previous_value = Mailkick.confirm_unsubscribe
+    begin
+      Mailkick.confirm_unsubscribe = value
+      yield
+    ensure
+      Mailkick.confirm_unsubscribe = previous_value
+    end
+  end
 end

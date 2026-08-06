@@ -1,6 +1,6 @@
 ## 3.0.0 (unreleased)
 
-- Added confirmation step to prevent issues with scanners
+- Added `confirm_unsubscribe` option
 - Enabled `headers` by default
 - Improved CSP support
 - Fixed change to key generator hash digest class
