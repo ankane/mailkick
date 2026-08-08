@@ -225,9 +225,7 @@ end
 
 ### 3.0
 
-Versions 1.1.0-2.0.0 cause applications to use SHA1 for the key generator hash digest class if `Mailkick.secret_token` is not manually set (due to [this behavior in Rails](https://github.com/rails/rails/issues/56736)).
-
-To avoid breakage when upgrading, add to `config/application.rb`:
+Versions 1.1.0-2.0.0 cause applications to use SHA1 for the key generator hash digest class (due to [this behavior in Rails](https://github.com/rails/rails/issues/56736)). To avoid breakage when upgrading, add to `config/application.rb`:
 
 ```ruby
 config.active_support.key_generator_hash_digest_class = OpenSSL::Digest::SHA1
