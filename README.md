@@ -5,7 +5,7 @@ Email subscriptions for Rails
 - Add one-click unsubscribe links and headers to your emails
 - Fetch bounces and spam reports from your email service
 
-**Mailkick 2.0 was recently released** - see [how to upgrade](#upgrading)
+**Mailkick 3.0 was recently released** - see [how to upgrade](#upgrading)
 
 :postbox: Check out [Ahoy Email](https://github.com/ankane/ahoy_email) for analytics
 
@@ -83,15 +83,19 @@ rails generate mailkick:views
 
 which copies the view into `app/views/mailkick`.
 
-## Unsubscribe Headers
-
-For one-click unsubscribe headers ([RFC 8058](https://datatracker.ietf.org/doc/html/rfc8058)), create `config/initializers/mailkick.rb` with:
+To add a confirmation step to prevent issues with scanners, create `config/initializers/mailkick.rb` with:
 
 ```ruby
-Mailkick.headers = true
+Mailkick.confirm_unsubscribe = true
 ```
 
-Headers will automatically be added to emails that call `mailkick_unsubscribe_url`.
+## Unsubscribe Headers
+
+One-click unsubscribe headers ([RFC 8058](https://datatracker.ietf.org/doc/html/rfc8058)) are automatically added to emails that call `mailkick_unsubscribe_url`. To disable, create `config/initializers/mailkick.rb` with:
+
+```ruby
+Mailkick.headers = false
+```
 
 ## Bounces and Spam Reports
 
@@ -219,18 +223,20 @@ end
 
 ## Upgrading
 
-### 2.0
+### 3.0
 
-Unsubscribe links created before version 1.1.1 (released January 2023) will no longer work by default. Determine if this is acceptable for your application (for instance, in the US, links must work [for 30 days](https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business) after the message is sent). To restore support, [determine the previous secret token](https://github.com/ankane/mailkick/blob/v1.4.0/lib/mailkick/engine.rb#L13-L22) and create an initializer with:
+Versions 1.1.0-2.0.0 cause applications to use SHA1 for the key generator hash digest class if `Mailkick.secret_token` is not manually set (due to [this behavior in Rails](https://github.com/rails/rails/issues/56736)).
+
+To avoid breakage when upgrading, add to `config/application.rb`:
 
 ```ruby
-Mailkick.message_verifier.rotate(previous_secret_token, serializer: Marshal)
+config.active_support.key_generator_hash_digest_class = OpenSSL::Digest::SHA1
 ```
 
-If fetching bounces, spam reports, and unsubscribes from Postmark, the suppressions API is now used and the default stream has been changed to `broadcast`. To use `outbound`, create an initializer with:
+Also, one-click unsubscribe headers are enabled by default. To disable, create an initializer with:
 
 ```ruby
-Mailkick.services = [Mailkick::Service::Postmark.new(api_key: api_key, stream_id: "outbound")]
+Mailkick.headers = false
 ```
 
 ## History

@@ -1,4 +1,6 @@
-## 3.0.0 (unreleased)
+## 3.0.0 (2026-08-08)
+
+See the [upgrade notes](https://github.com/ankane/mailkick?tab=readme-ov-file#30)
 
 - Added `confirm_unsubscribe` option
 - Enabled `headers` by default
@@ -8,7 +10,7 @@
 
 ## 2.0.0 (2025-06-23)
 
-See the [upgrade notes](https://github.com/ankane/mailkick?tab=readme-ov-file#20)
+See the [upgrade notes](https://github.com/ankane/mailkick/blob/v2.0.0/README.md#20)
 
 - Added `prefix` option to `has_subscriptions`
 - Switched to suppressions API for Postmark and changed default stream to `broadcast`
