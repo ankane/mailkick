@@ -231,6 +231,8 @@ Versions 1.1.0-2.0.0 cause applications to use SHA1 for the key generator hash d
 config.active_support.key_generator_hash_digest_class = OpenSSL::Digest::SHA1
 ```
 
+This setting affects the whole Rails application, not just Mailkick. It can also affect Rails cookies, signed IDs, Active Storage IDs, and other values whose signing or encryption keys are derived from the application key generator. Removing it restores Rails' SHA256 default and can make existing SHA1-derived values unverifiable or undecryptable. Plan their expiry, reissue, or key-rotation process before removing the setting. Mailkick 3.0 derives its own token key with SHA1, so this application-wide setting is not needed solely for Mailkick tokens.
+
 Also, one-click unsubscribe headers are enabled by default. To disable, create an initializer with:
 
 ```ruby
